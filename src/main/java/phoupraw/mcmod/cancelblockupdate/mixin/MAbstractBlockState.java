@@ -13,6 +13,8 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
+import net.minecraft.world.block.WireOrientation;
+import net.minecraft.world.tick.ScheduledTickView;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -32,7 +34,7 @@ abstract class MAbstractBlockState {
 
     //以下是取消方块更新
     @Inject(method = "getStateForNeighborUpdate", at = @At("HEAD"), cancellable = true)
-    private void cancelGetStateForNeighborUpdate(Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos, CallbackInfoReturnable<BlockState> cir) {
+    private void cancelGetStateForNeighborUpdate(WorldView world, ScheduledTickView scheduledTickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random, CallbackInfoReturnable<BlockState> cir) {
         if (!CBUGameRules.getOff(world)) {
             //noinspection ConstantConditions
             cir.setReturnValue((BlockState) (Object) this);
@@ -40,7 +42,7 @@ abstract class MAbstractBlockState {
     }
 
     @Inject(method = "neighborUpdate", at = @At("HEAD"), cancellable = true)
-    private void cancelNeighborUpdate(World world, BlockPos pos, Block block, BlockPos posFrom, boolean notify, CallbackInfo ci) {
+    private void cancelNeighborUpdate(World world, BlockPos pos, Block block, WireOrientation wireOrientation, boolean notify, CallbackInfo ci) {
         if (!CBUGameRules.getOff(world)) {
             ci.cancel();
         }
