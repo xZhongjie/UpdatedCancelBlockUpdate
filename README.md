@@ -14,18 +14,21 @@
 
 ## 支持的 Minecraft 版本
 
-每个 Minecraft 大版本一个分支，`main` 分支指向最新的支持版本：
+每个 Minecraft 大版本一个分支。**jar 文件名里的版本后缀（`<MC版本>-<模组版本>`，即 `mod_version`）对应可用的 Minecraft 版本**，按下面这张表选：
 
-| Minecraft | 分支 | 构建状态 |
-|---|---|---|
-| 1.19.2 | `1.19.2` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.19.2)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
-| 1.20.1 | `1.20.1` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.20.1)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
-| 1.20.4 | `1.20.4` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.20.4)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
-| 1.21.1 | `1.21.1` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.1)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
-| 1.21.4 ~ 1.21.8 | `1.21.4` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.4)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
-| 1.21.8+ | `1.21.8` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.8)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
+| 版本后缀（jar 文件名前缀） | 适用的 Minecraft 版本 | 分支 | 构建状态 |
+|---|---|---|---|
+| `1.19.2-1.1.2` | 1.19 ~ 1.19.2 | `1.19.2` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.19.2)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
+| `1.20.1-1.1.2` | 1.20.1 ~ 1.20.4 | `1.20.1` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.20.1)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
+| `1.20.4-1.1.2` | 1.20.4 | `1.20.4` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.20.4)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
+| `1.21.1-1.1.2` | 1.21.1 | `1.21.1` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.1)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
+| `1.21.4-1.1.2` | 1.21.4 ~ 1.21.8 | `1.21.4` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.4)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
+| `1.21.8-1.1.2` | 1.21.8+ | `1.21.8` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.8)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
 
-> `1.21.4` 分支的 jar 在 1.21.4 ~ 1.21.8 上均可使用（这些版本间相关 API 未变化）。
+- **版本后缀含义**：`<MC版本>-<模组版本>`。例如 `1.21.4-1.1.2` = 为 Minecraft 1.21.4 构建的模组 1.1.2；`1.1.2` 是模组自身版本（所有分支相同，与上游一致）。
+- **一个 jar 为什么能覆盖多个 MC 小版本**：这些版本之间本模组用到的游戏 API 没有变化。对应范围已写入各分支 `fabric.mod.json` 的 `depends.minecraft`，游戏加载时 Fabric 会自动校验，版本不匹配会拒绝加载（不会崩溃）。
+- **拿不准时**：下载与你 MC 版本号相同的 jar 即可（例如 MC 1.21.5 → 用 `1.21.4-1.1.2`）。
+- `main` 分支指向最新的支持版本。
 
 ## 新增游戏规则
 
