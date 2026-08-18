@@ -12,7 +12,7 @@ public final class CBUIdentifiers {
       BOOL_RULE = of("bool_rule");
 
     public static Identifier of(String path) {
-        return new Identifier(CancelBlockUpdate.MOD_ID, path);
+        return Identifier.of(CancelBlockUpdate.MOD_ID, path);
     }
 
     private CBUIdentifiers() {

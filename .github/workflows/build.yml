@@ -1,0 +1,47 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - '1.19.2'
+      - '1.20.1'
+      - '1.20.4'
+      - '1.21.1'
+      - '1.21.4'
+      - '1.21.8'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Read java_version from gradle.properties
+        id: props
+        run: |
+          echo "java_version=$(grep '^java_version' gradle.properties | cut -d= -f2 | tr -d ' ')" >> "$GITHUB_OUTPUT"
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ steps.props.outputs.java_version }}
+          cache: gradle
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Build
+        run: ./gradlew build --no-daemon
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: CancelBlockUpdate-${{ github.ref_name }}
+          path: |
+            build/libs/*.jar
+            !build/libs/*-sources.jar
+            !build/libs/*-dev.jar
