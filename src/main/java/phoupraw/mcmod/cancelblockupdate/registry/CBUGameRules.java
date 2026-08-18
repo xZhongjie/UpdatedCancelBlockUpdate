@@ -2,10 +2,9 @@ package phoupraw.mcmod.cancelblockupdate.registry;
 
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -32,8 +31,8 @@ public final class CBUGameRules {
     public static final GameRules.Key<GameRules.BooleanRule> REPLACE = GameRuleRegistry.register(CBUIdentifiers.REPLACE.toString(), GameRules.Category.UPDATES, GameRuleFactory.createBooleanRule(false, ON_CHANGE));
 
     static {
-        Registry.register(CBURegistries.BOOL_RULE, CBUIdentifiers.OFF, OFF);
-        Registry.register(CBURegistries.BOOL_RULE, CBUIdentifiers.REPLACE, REPLACE);
+        Registry.register(CBURegistries.BOOL_RULE, RegistryKey.of(CBURegistries.BOOL_RULE_KEY, CBUIdentifiers.OFF), OFF);
+        Registry.register(CBURegistries.BOOL_RULE, RegistryKey.of(CBURegistries.BOOL_RULE_KEY, CBUIdentifiers.REPLACE), REPLACE);
         Map<GameRules.Key<GameRules.BooleanRule>, Map<WorldView, Boolean>> map = new HashMap<>();
         for (var key : CBURegistries.BOOL_RULE) map.put(key, new WeakHashMap<>());
         CACHES = map;
@@ -42,11 +41,9 @@ public final class CBUGameRules {
         boolean newValue = booleanRule.get();
         GameRules.Key<GameRules.BooleanRule> key = booleanRule.getType().getKey();
         for (ServerWorld world : server.getWorlds()) CACHES.get(key).put(world, newValue);
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeByte(CBURegistries.BOOL_RULE.getRawId(key));
-        buf.writeBoolean(newValue);
+        int ruleId = CBURegistries.BOOL_RULE.getRawId(key);
         for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
-            ServerPlayNetworking.send(player, CBUIdentifiers.CHANNEL, buf);
+            ServerPlayNetworking.send(player, new CBUPayloads.SyncPayload((byte) ruleId, newValue));
         }
     }
 

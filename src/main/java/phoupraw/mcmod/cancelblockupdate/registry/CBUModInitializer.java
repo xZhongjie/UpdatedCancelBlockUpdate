@@ -6,12 +6,11 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents.Load;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.BlockPosArgumentType;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -21,8 +20,6 @@ import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.ApiStatus;
 import phoupraw.mcmod.cancelblockupdate.CancelBlockUpdate;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Objects;
 
 @ApiStatus.Internal
@@ -45,17 +42,24 @@ public final class CBUModInitializer implements ModInitializer {
     }
 
     private static void afterChangeWorld(ServerPlayerEntity player, ServerWorld origin, ServerWorld destination) {
-        List<PacketByteBuf> bufs = new LinkedList<>();
         var server = Objects.requireNonNull(player.getServer(), "player=" + player);
         for (var key : CBURegistries.BOOL_RULE) {
-            PacketByteBuf buf = PacketByteBufs.create();
-            buf.writeByte(CBURegistries.BOOL_RULE.getRawId(key));
-            buf.writeBoolean(server.getGameRules().getBoolean(key));
-            bufs.add(buf);
+            ServerPlayNetworking.send(player, new CBUPayloads.SyncPayload((byte) CBURegistries.BOOL_RULE.getRawId(key), server.getGameRules().getBoolean(key)));
         }
-        for (var buf : bufs) {
-            ServerPlayNetworking.send(player, CBUIdentifiers.CHANNEL, buf);
-        }
+    }
+
+    /**
+     收到客户端的同步请求后，把当前所有游戏规则的值发送给该客户端。
+     */
+    private static void onRequestSync(CBUPayloads.RequestSyncPayload payload, ServerPlayNetworking.Context context) {
+        context.server().execute(() -> {
+            ServerPlayerEntity player = context.player();
+            if (player == null) return;
+            MinecraftServer server = context.server();
+            for (var key : CBURegistries.BOOL_RULE) {
+                ServerPlayNetworking.send(player, new CBUPayloads.SyncPayload((byte) CBURegistries.BOOL_RULE.getRawId(key), server.getGameRules().getBoolean(key)));
+            }
+        });
     }
 
     /**
@@ -89,21 +93,12 @@ public final class CBUModInitializer implements ModInitializer {
     @Override
     public void onInitialize() {
         loadClasses();
+        PayloadTypeRegistry.playC2S().register(CBUPayloads.RequestSyncPayload.ID, CBUPayloads.RequestSyncPayload.CODEC);
+        PayloadTypeRegistry.playS2C().register(CBUPayloads.SyncPayload.ID, CBUPayloads.SyncPayload.CODEC);
+        ServerPlayNetworking.registerGlobalReceiver(CBUPayloads.RequestSyncPayload.ID, CBUModInitializer::onRequestSync);
         ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register(CBUModInitializer::afterChangeWorld);
         CommandRegistrationCallback.EVENT.register(CBUModInitializer::register);
         ServerWorldEvents.LOAD.register(CBUModInitializer::onWorldLoad);
-        ServerPlayNetworking.registerGlobalReceiver(CBUIdentifiers.CHANNEL, (server, player, handler, emptyBuf, responseSender) -> {
-            List<PacketByteBuf> bufs = new LinkedList<>();
-            for (var key : CBURegistries.BOOL_RULE) {
-                PacketByteBuf buf = PacketByteBufs.create();
-                buf.writeByte(CBURegistries.BOOL_RULE.getRawId(key));
-                buf.writeBoolean(server.getGameRules().getBoolean(key));
-                bufs.add(buf);
-            }
-            for (var buf : bufs) {
-                responseSender.sendPacket(CBUIdentifiers.CHANNEL, buf);
-            }
-        });
     }
 
 }

@@ -4,18 +4,21 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.minecraft.registry.RegistryWrapper;
 import phoupraw.mcmod.cancelblockupdate.CancelBlockUpdate;
 import phoupraw.mcmod.cancelblockupdate.registry.CBUGameRules;
+
+import java.util.concurrent.CompletableFuture;
 
 @Environment(EnvType.CLIENT)
 final class Chinese extends FabricLanguageProvider {
 
-    Chinese(FabricDataOutput dataOutput) {
-        super(dataOutput, "zh_cn");
+    Chinese(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+        super(dataOutput, "zh_cn", registryLookup);
     }
 
     @Override
-    public void generateTranslations(TranslationBuilder b) {
+    public void generateTranslations(RegistryWrapper.WrapperLookup registryLookup, TranslationBuilder b) {
         String modName = "取消方块更新";
         b.add("modmenu.nameTranslation." + CancelBlockUpdate.MOD_ID, modName);
         b.add("modmenu.descriptionTranslation." + CancelBlockUpdate.MOD_ID, """

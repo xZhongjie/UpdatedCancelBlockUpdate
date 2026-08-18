@@ -7,6 +7,7 @@ public final class CBUIdentifiers {
 
     public static final Identifier
       CHANNEL = of("channel"),
+      REQUEST_SYNC = of("request_sync"),
       OFF = of("off"),
       REPLACE = of("replace"),
       BOOL_RULE = of("bool_rule");
