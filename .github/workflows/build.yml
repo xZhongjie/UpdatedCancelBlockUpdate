@@ -19,16 +19,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Read java_version from gradle.properties
-        id: props
-        run: |
-          echo "java_version=$(grep '^java_version' gradle.properties | cut -d= -f2 | tr -d ' ')" >> "$GITHUB_OUTPUT"
-
-      - name: Set up JDK
+      # Loom 1.17+ 需要 Java 21 运行 Gradle；编译目标版本由 gradle.properties 的 java_version 决定
+      # （JDK 21 可通过 options.release 编译出 Java 17 字节码，供 1.19.2/1.20.x 分支使用）。
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: ${{ steps.props.outputs.java_version }}
+          java-version: 21
           cache: gradle
 
       - name: Make gradlew executable
