@@ -20,16 +20,16 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 /**
- * 1.21.11 起 Minecraft 重构了游戏规则系统（{@link GameRule} / {@link GameRuleCategory}，包为
- * {@code net.minecraft.world.rule}），Fabric API 也改为 {@link GameRuleBuilder} + {@link GameRuleEvents}。
- * 本类与旧版本的差异仅在注册与取值 API，缓存与网络同步逻辑不变。
+ * 1.21.11 ? Minecraft ??????????{@link GameRule} / {@link GameRuleCategory}???
+ * {@code net.minecraft.world.rule}??Fabric API ??? {@link GameRuleBuilder} + {@link GameRuleEvents}?
+ * ???????????????? API?????????????
  */
 public final class CBUGameRules {
 
     /**
-     从世界到游戏规则的值的映射。客户端仅靠此来获取游戏规则值，而服务端如果检测到没有缓存，则会尝试获取服务器来获得游戏规则值并加入缓存。
+     ??????????????????????????????????????????????????????????????????
      <br/>
-     本模组修改的所有方法的形参都包含{@link World}、{@link WorldAccess}、{@link WorldView}等，所以以这个作为缓存的键比较合适。
+     ????????????????{@link World}?{@link WorldAccess}?{@link WorldView}??????????????????
      */
     public static final Map<GameRule<Boolean>, Map<WorldView, Boolean>> CACHES;
     public static final GameRule<Boolean> OFF;
@@ -75,21 +75,21 @@ public final class CBUGameRules {
     }
 
     /**
-     从{@link #}中获取游戏规则的值，如果为{@code null}，如果为{@link ServerWorldAccess}，则会从服务器获取规则的值，否则直接为{@code false}，将其添加到缓存中。
-     @param key 键
-     @return 游戏规则值。
+     ?{@link #}?????????????{@code null}????{@link ServerWorldAccess}???????????????????{@code false}??????????
+     @param key ?
+     @return ??????
      */
     public static boolean get(GameRule<Boolean> key, WorldView world) {
         var cache = CACHES.get(key);
         Boolean value = cache.get(world);
         if (value != null) return value;
         if (world instanceof ServerWorldAccess serverWorldAccess) {
-            value = (Boolean) serverWorldAccess.toServerWorld().getServer().getGameRules().getValue(key);
+            value = (Boolean) serverWorldAccess.toServerWorld().getGameRules().getValue(key);
         } else {
             value = false;
             StringWriter writer = new StringWriter();
             new Throwable().printStackTrace(new PrintWriter(writer));
-            CancelBlockUpdate.LOGGER.error("无法获取" + key + "的CACHE值！已设为false。" + world + System.lineSeparator() + writer);
+            CancelBlockUpdate.LOGGER.error("????" + key + "?CACHE?????false?" + world + System.lineSeparator() + writer);
             //CancelBlockUpdate.LOGGER.catching(new IllegalStateException());
         }
         cache.put(world, value);
@@ -100,3 +100,4 @@ public final class CBUGameRules {
     }
 
 }
+
