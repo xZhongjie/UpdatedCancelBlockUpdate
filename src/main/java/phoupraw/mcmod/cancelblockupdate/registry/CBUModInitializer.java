@@ -43,7 +43,7 @@ public final class CBUModInitializer implements ModInitializer {
 
     private static void afterChangeWorld(ServerPlayerEntity player, ServerWorld origin, ServerWorld destination) {
         for (var key : CBURegistries.BOOL_RULE) {
-            ServerPlayNetworking.send(player, new CBUPayloads.SyncPayload((byte) CBURegistries.BOOL_RULE.getRawId(key), server.getGameRules().getBoolean(key)));
+            ServerPlayNetworking.send(player, new CBUPayloads.SyncPayload((byte) CBURegistries.BOOL_RULE.getRawId(key), destination.getGameRules().getBoolean(key)));
         }
     }
 
@@ -101,5 +101,6 @@ public final class CBUModInitializer implements ModInitializer {
     }
 
 }
+
 
 
