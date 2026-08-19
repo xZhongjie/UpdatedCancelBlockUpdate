@@ -36,4 +36,3 @@
 
 - `/cancelblockupdate schedule <pos>`：触发`pos`处方块的计划刻。
   建议搭配调整方块状态的调试棒使用。
-
