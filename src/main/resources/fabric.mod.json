@@ -21,22 +21,14 @@
   "mixins": ["cancelblockupdate.mixins.json"],
   "accessWidener": "cancelblockupdate.accesswidener",
   "depends": {
-    "minecraft": ">=1.21.8 <1.21.11",
+    "minecraft": ">=1.21.11 <26",
     "fabricloader": ">=0.16.0",
     "fabric-api": "*"
   },
   "suggests": {
     "modmenu": "*"
   },
-  "custom": {
-    "loom:injected_interfaces": {
-      "net/minecraft/class_1928\u0024class_4315": ["phoupraw/mcmod/cancelblockupdate/inject/IGameRules_Rule"],
-      "net/minecraft/class_1928\u0024class_4314": ["phoupraw/mcmod/cancelblockupdate/inject/IGameRules_Type"]
-    },
-    "modmenu": {
-      "links": {
-      }
-    }
-  }
+  "custom": { "modmenu": { "links": {} } }
 }
+
 

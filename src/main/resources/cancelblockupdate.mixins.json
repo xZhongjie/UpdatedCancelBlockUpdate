@@ -5,10 +5,7 @@
   "mixins": [
     "MAbstractBlockState",
     "MAbstractRailBlock",
-    "MFluidState",
-    "MGameRules",
-    "MGameRules_Rule",
-    "MGameRules_Type"
+    "MFluidState"
   ],
   "client": [
   ],

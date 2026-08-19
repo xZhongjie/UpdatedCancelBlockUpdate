@@ -37,14 +37,14 @@ public final class CBUModInitializer implements ModInitializer {
      */
     private static void onWorldLoad(MinecraftServer server, ServerWorld world) {
         for (var key : CBURegistries.BOOL_RULE) {
-            CBUGameRules.CACHES.get(key).put(world, server.getGameRules().getBoolean(key));
+            CBUGameRules.CACHES.get(key).put(world, (Boolean) server.getGameRules().getValue(key));
         }
     }
 
     private static void afterChangeWorld(ServerPlayerEntity player, ServerWorld origin, ServerWorld destination) {
         var server = Objects.requireNonNull(player.getServer(), "player=" + player);
         for (var key : CBURegistries.BOOL_RULE) {
-            ServerPlayNetworking.send(player, new CBUPayloads.SyncPayload((byte) CBURegistries.BOOL_RULE.getRawId(key), server.getGameRules().getBoolean(key)));
+            ServerPlayNetworking.send(player, new CBUPayloads.SyncPayload((byte) CBURegistries.BOOL_RULE.getRawId(key), (Boolean) server.getGameRules().getValue(key)));
         }
     }
 
@@ -57,7 +57,7 @@ public final class CBUModInitializer implements ModInitializer {
             if (player == null) return;
             MinecraftServer server = context.server();
             for (var key : CBURegistries.BOOL_RULE) {
-                ServerPlayNetworking.send(player, new CBUPayloads.SyncPayload((byte) CBURegistries.BOOL_RULE.getRawId(key), server.getGameRules().getBoolean(key)));
+                ServerPlayNetworking.send(player, new CBUPayloads.SyncPayload((byte) CBURegistries.BOOL_RULE.getRawId(key), (Boolean) server.getGameRules().getValue(key)));
             }
         });
     }
