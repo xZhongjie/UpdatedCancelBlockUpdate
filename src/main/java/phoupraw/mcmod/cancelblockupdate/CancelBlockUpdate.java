@@ -5,7 +5,8 @@ import org.slf4j.LoggerFactory;
 
 public final class CancelBlockUpdate {
 
-    public static final String MOD_ID = "ucbu";
+    public static final String MOD_ID = "cancelblockupdate";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 }
+

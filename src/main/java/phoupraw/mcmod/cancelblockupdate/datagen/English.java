@@ -26,11 +26,11 @@ final class English extends FabricLanguageProvider {
           Cancel block update, block schedule tick, random tick and fluid schedule tick, allow unlimited place block.
           For building special buildings, make and test special map.
           ?lNew game rules:?r
-          - ?oucbu:off?r: when ?ofalse?r, cancel all block update; when ?otrue?r it is vanilla; default ?ofalse?r.
-          - ?oucbu:replace?r: when ?ofalse?r, grass, fern and so on block can't be replaced directly; when ?otrue?r it is vanilla; default ?ofalse?r.
+          - ?ocancelblockupdate:off?r: when ?ofalse?r, cancel all block update; when ?otrue?r it is vanilla; default ?ofalse?r.
+          - ?ocancelblockupdate:replace?r: when ?ofalse?r, grass, fern and so on block can't be replaced directly; when ?otrue?r it is vanilla; default ?ofalse?r.
           ?lNew commands:?r
-          - ?o/ucbu random <pos>?r: trigger random tick of block at ?opos?r.
-          - ?o/ucbu schedule <pos>?r: trigger schedule tick of block at ?opos?r.
+          - ?o/cancelblockupdate random <pos>?r: trigger random tick of block at ?opos?r.
+          - ?o/cancelblockupdate schedule <pos>?r: trigger schedule tick of block at ?opos?r.
           Suggest with adapt block state debug stick to use.
           """);
         b.add(CBUGameRules.OFF.getDescriptionId(), modName + ": disable all effects of the mod");
@@ -38,3 +38,4 @@ final class English extends FabricLanguageProvider {
     }
 
 }
+
