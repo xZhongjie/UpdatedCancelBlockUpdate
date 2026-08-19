@@ -16,7 +16,7 @@ public final class CBUPayloads {
      * ?????????????????????????????
      */
     public record RequestSyncPayload() implements CustomPacketPayload {
-        public static final CustomPacketPayload.Type<RequestSyncPayload> TYPE = CustomPacketPayload.createType(CBUIdentifiers.REQUEST_SYNC.toString());
+        public static final CustomPacketPayload.Type<RequestSyncPayload> TYPE = new CustomPacketPayload.Type<>(CBUIdentifiers.REQUEST_SYNC);
         public static final StreamCodec<FriendlyByteBuf, RequestSyncPayload> CODEC = StreamCodec.unit(new RequestSyncPayload());
 
         @Override
@@ -29,7 +29,7 @@ public final class CBUPayloads {
      * ?????????????????????
      */
     public record SyncPayload(byte ruleId, boolean value) implements CustomPacketPayload {
-        public static final CustomPacketPayload.Type<SyncPayload> TYPE = CustomPacketPayload.createType(CBUIdentifiers.CHANNEL.toString());
+        public static final CustomPacketPayload.Type<SyncPayload> TYPE = new CustomPacketPayload.Type<>(CBUIdentifiers.CHANNEL);
         public static final StreamCodec<FriendlyByteBuf, SyncPayload> CODEC = CustomPacketPayload.codec(SyncPayload::write, SyncPayload::read);
 
         public static SyncPayload read(FriendlyByteBuf buf) {
@@ -48,3 +48,4 @@ public final class CBUPayloads {
     }
 
 }
+
