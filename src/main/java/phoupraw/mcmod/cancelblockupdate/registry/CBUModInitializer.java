@@ -37,7 +37,7 @@ public final class CBUModInitializer implements ModInitializer {
      */
     private static void onWorldLoad(MinecraftServer server, ServerWorld world) {
         for (var key : CBURegistries.BOOL_RULE) {
-            CBUGameRules.CACHES.get(key).put(world, destination.getGameRules().getBoolean(key));
+            CBUGameRules.CACHES.get(key).put(world, world.getGameRules().getBoolean(key));
         }
     }
 
