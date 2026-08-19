@@ -8,22 +8,6 @@
 
 用于建造特殊建筑、制作和测试特殊地图。
 
-## 支持的 Minecraft 版本
-
-每个 Minecraft 大版本一个分支。本模组 (UCBU) 的 **jar 文件名直接写明适用的 Minecraft 版本范围**，命名规则为 `UpdatedCancelBlockUpdate-<模组版本>-mc<适用MC版本范围>.jar`，按下面这张表选：
-
-| jar 文件名 | 适用的 Minecraft 版本 | 分支 | 构建状态 |
-|---|---|---|---|
-| `UpdatedCancelBlockUpdate-1.1.2-mc1.19-1.19.2.jar` | 1.19 ~ 1.19.2 | `1.19.2` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.19.2)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
-| `UpdatedCancelBlockUpdate-1.1.2-mc1.20.1-1.20.3.jar` | 1.20.1 ~ 1.20.3 | `1.20.1` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.20.1)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
-| `UpdatedCancelBlockUpdate-1.1.2-mc1.20.4.jar` | 1.20.4 | `1.20.4` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.20.4)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
-| `UpdatedCancelBlockUpdate-1.1.2-mc1.21.0-1.21.1.jar` | 1.21.0 ~ 1.21.1 | `1.21.1` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.1)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
-| `UpdatedCancelBlockUpdate-1.1.2-mc1.21.2-1.21.8.jar` | 1.21.2 ~ 1.21.8 | `1.21.4` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.4)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
-| `UpdatedCancelBlockUpdate-1.1.2-mc1.21.9-1.21.10.jar` | 1.21.9 ~ 1.21.10 | `1.21.10` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.10)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
-| `UpdatedCancelBlockUpdate-1.1.2-mc1.21.11.jar` | 1.21.11 | `1.21.11` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.11)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
-| `UpdatedCancelBlockUpdate-1.1.2-mc26.1.jar` | 26.1 | `26.1` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=26.1)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
-| `UpdatedCancelBlockUpdate-1.1.2-mc26.2.jar` | 26.2 | `26.2` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=26.2)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
-
 ## 新增游戏规则
 
 - `cancelblockupdate:off`：为`false`时，取消所有更新；为`true`即原版；默认为`false`。
@@ -36,5 +20,6 @@
 
 - `/cancelblockupdate schedule <pos>`：触发`pos`处方块的计划刻。
   建议搭配调整方块状态的调试棒使用。
+
 
 
