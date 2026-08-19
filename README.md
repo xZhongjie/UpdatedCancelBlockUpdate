@@ -24,7 +24,7 @@
 | `UpdatedCancelBlockUpdate-1.1.2-mc1.21.1.jar` | 1.21.1 | `1.21.1` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.1)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
 | `UpdatedCancelBlockUpdate-1.1.2-mc1.21.4-1.21.10.jar` | 1.21.4 ~ 1.21.10 | `1.21.4` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.4)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
 | `UpdatedCancelBlockUpdate-1.1.2-mc1.21.8-1.21.10.jar` | 1.21.8 ~ 1.21.10 | `1.21.8` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.8)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
-| `UpdatedCancelBlockUpdate-1.1.2-mc1.21.11+.jar` | 1.21.11+ | `1.21.11` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.11)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
+| `UpdatedCancelBlockUpdate-1.1.2-mc1.21.11.jar` | 1.21.11+ | `1.21.11` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.11)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
 | `UpdatedCancelBlockUpdate-1.1.2-mc26.1.jar` | 26.1 | `26.1` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=26.1)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
 | `UpdatedCancelBlockUpdate-1.1.2-mc26.2.jar` | 26.2 | `26.2` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=26.2)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
 
@@ -32,7 +32,7 @@
 
 - **命名规则**：`CancelBlockUpdate-<模组版本>-mc<适用MC版本范围>`。`1.1.2` 是模组自身版本（所有分支相同，与上游一致）；`mc` 后面就是该 jar 适用的 Minecraft 版本范围。
 - **一个 jar 为什么能覆盖多个 MC 小版本**：这些版本之间本模组用到的游戏 API 没有变化。对应范围已写入各分支 `fabric.mod.json` 的 `depends.minecraft`，游戏加载时 Fabric 会自动校验，版本不匹配会拒绝加载（不会崩溃）。
-- **拿不准时**：选 `mc` 后缀覆盖你 MC 版本的 jar 即可（例如 MC 1.21.5 → 用 `UpdatedCancelBlockUpdate-1.1.2-mc1.21.4-1.21.10.jar`；MC 1.21.11 → 用 `UpdatedCancelBlockUpdate-1.1.2-mc1.21.11+.jar`）。
+- **拿不准时**：选 `mc` 后缀覆盖你 MC 版本的 jar 即可（例如 MC 1.21.5 → 用 `UpdatedCancelBlockUpdate-1.1.2-mc1.21.4-1.21.10.jar`；MC 1.21.11 → 用 `UpdatedCancelBlockUpdate-1.1.2-mc1.21.11.jar`）。
 - `main` 分支指向最新的支持版本。
 
 ## 新增游戏规则
@@ -53,4 +53,3 @@
 - 本仓库使用 GitHub Actions 自动构建并发布：推送到任意版本分支会触发 `Build`；推送形如 `v*` 的 tag（例如 `v1.1.2-mc1.21.8+`）会自动构建并把 jar 上传为 GitHub Release。
 - 每个分支的 `gradle.properties` 声明各自的 Minecraft / Yarn / Fabric Loader / Fabric API 版本、`mod_version`、`mc_version_range`（jar 名里 `mc` 后缀的内容）与 `java_version`（编译目标版本）。CI 统一使用 JDK 21 运行 Gradle（Loom 1.17+ 要求），再通过 `options.release` 编译出对应 Java 版本的字节码（旧分支为 Java 17）。
 - 本地构建：`./gradlew build`（产物在 `build/libs/`）；需要代理时请把代理配置写入 `~/.gradle/gradle.properties`，不要提交到仓库。
-
