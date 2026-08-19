@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "id": "cancelblockupdate",
+  "id": "ucbu",
   "version": "${version}",
-  "name": "Cancel Block Update",
-  "description": "阻止方块更新、方块计划刻、随机刻、放置可行性检查、流体计划刻、铁轨自动转角。阻止草和蕨等植物被替换。",
+  "name": "UpdatedCancelBlockUpdate",
+  "description": "更新版取消方块更新 (UCBU)：阻止方块更新、方块计划刻、随机刻、放置可行性检查、流体计划刻、铁轨自动转角。阻止草和蕨等植物被替换。",
   "authors": ["Phoupraw"],
   "contact": {
     "homepage": "https://www.mcmod.cn/class/5695.html",
     "issues": "https://www.mcbbs.net/thread-1305805-1-1.html",
-    "_sources": ""
+    "sources": "https://github.com/xZhongjie/UpdatedCancelBlockUpdate"
   },
   "license": "Mozilla Public License 2.0",
   "icon": "assets/cancelblockupdate/icon.png",
@@ -39,3 +39,4 @@
     }
   }
 }
+
