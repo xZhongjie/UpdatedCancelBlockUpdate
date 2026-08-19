@@ -32,24 +32,23 @@ public final class CBUModInitializer implements ModInitializer {
     }
 
     /**
-     在一个服务端世界被载入时，将其放入缓存。虽然说即使没有此方法，{@link CBUGameRules#getOff}也可以处理那些新加载的世界，但是还是用这个方法比较好。
+     ???????????????????????????????{@link CBUGameRules#getOff}???????????????????????????
      @see Load#onWorldLoad
      */
     private static void onWorldLoad(MinecraftServer server, ServerWorld world) {
         for (var key : CBURegistries.BOOL_RULE) {
-            CBUGameRules.CACHES.get(key).put(world, server.getGameRules().getBoolean(key));
+            CBUGameRules.CACHES.get(key).put(world, destination.getGameRules().getBoolean(key));
         }
     }
 
     private static void afterChangeWorld(ServerPlayerEntity player, ServerWorld origin, ServerWorld destination) {
-        var server = Objects.requireNonNull(player.getServer(), "player=" + player);
         for (var key : CBURegistries.BOOL_RULE) {
-            ServerPlayNetworking.send(player, new CBUPayloads.SyncPayload((byte) CBURegistries.BOOL_RULE.getRawId(key), server.getGameRules().getBoolean(key)));
+            ServerPlayNetworking.send(player, new CBUPayloads.SyncPayload((byte) CBURegistries.BOOL_RULE.getRawId(key), destination.getGameRules().getBoolean(key)));
         }
     }
 
     /**
-     收到客户端的同步请求后，把当前所有游戏规则的值发送给该客户端。
+     ???????????????????????????????
      */
     private static void onRequestSync(CBUPayloads.RequestSyncPayload payload, ServerPlayNetworking.Context context) {
         context.server().execute(() -> {
@@ -57,13 +56,13 @@ public final class CBUModInitializer implements ModInitializer {
             if (player == null) return;
             MinecraftServer server = context.server();
             for (var key : CBURegistries.BOOL_RULE) {
-                ServerPlayNetworking.send(player, new CBUPayloads.SyncPayload((byte) CBURegistries.BOOL_RULE.getRawId(key), server.getGameRules().getBoolean(key)));
+                ServerPlayNetworking.send(player, new CBUPayloads.SyncPayload((byte) CBURegistries.BOOL_RULE.getRawId(key), destination.getGameRules().getBoolean(key)));
             }
         });
     }
 
     /**
-     注册指令，目前只有schedule和random两条子命令。
+     ?????????schedule?random??????
      @see CommandRegistrationCallback#register
      */
     private static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
@@ -102,3 +101,4 @@ public final class CBUModInitializer implements ModInitializer {
     }
 
 }
+
