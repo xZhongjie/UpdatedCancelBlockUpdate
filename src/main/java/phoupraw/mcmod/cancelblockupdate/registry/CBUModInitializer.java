@@ -36,7 +36,7 @@ public final class CBUModInitializer implements ModInitializer {
     }
 
     private static void afterChangeLevel(ServerPlayer player, ServerLevel origin, ServerLevel destination) {
-        var server = Objects.requireNonNull(player.getServer(), "player=" + player);
+        var server = Objects.requireNonNull(player.level().getServer(), "player=" + player);
         for (var key : CBURegistries.BOOL_RULE) {
             ServerPlayNetworking.send(player, new CBUPayloads.SyncPayload((byte) CBURegistries.BOOL_RULE.getId(key), server.getGameRules().get(key)));
         }
@@ -90,3 +90,4 @@ public final class CBUModInitializer implements ModInitializer {
     }
 
 }
+
