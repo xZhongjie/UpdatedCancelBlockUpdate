@@ -1,11 +1,6 @@
-[![Modrinth](https://img.shields.io/modrinth/dt/cancel-block-update?logo=modrinth&label=&suffix=%20&style=flat&color=242629&labelColor=5ca424&logoColor=1c1c1c)](https://modrinth.com/mod/cancel-block-update)
-![Minecraft](https://img.shields.io/badge/Available%20for-MC%201.19.2%20~%2026.2-c70039)
-![Fabric](https://img.shields.io/badge/Mod%20loader-Fabric-1976d2)
+# 取消方块更新 (UCBU)
 
-[![Fabric](https://cdn.discordapp.com/attachments/705864145169416313/969720133998239794/fabric_supported.png)](https://fabricmc.net/)
-
-# 取消方块更新
-
+> 本仓库为 [CancelBlockUpdate](https://github.com/Phoupraw/CancelBlockUpdate)（原作者 Phoupraw，[mcmod](https://www.mcmod.cn/class/5695.html)）的更新维护版，主要新增了对新版本 Minecraft（1.20.4 及以后）的支持与多版本自动发布流程。
 **【警告】** 在世界生成时启用本模组的效果可能会产生大量浮空方块，如果想生成正常的世界，请提前修改游戏规则。
 
 取消方块更新、方块计划刻、随机刻和流体计划刻，允许无条件放置方块。
@@ -29,24 +24,17 @@
 | `UpdatedCancelBlockUpdate-1.1.2-mc26.1.jar` | 26.1 | `26.1` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=26.1)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
 | `UpdatedCancelBlockUpdate-1.1.2-mc26.2.jar` | 26.2 | `26.2` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=26.2)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
 
-> **注意**：版本分水岭——1.21.9 起 `Entity.getWorld()` 被移除（客户端取世界方式变化）；1.21.11 起游戏规则系统重构（`GameRules` 移到 `world.rule` 包，`Key/Type/Rule` 改为 `GameRule/GameRuleType`）。因此 1.21 线由 `1.21.4`（1.21.4~1.21.8）、`1.21.8`、`1.21.10`（1.21.9~1.21.10）、`1.21.11` 各管一段，范围都已写入 `depends.minecraft`，版本不匹配时加载器直接拒绝、不会崩溃。26.x 起 Minecraft 改为 Mojang 官方命名且要求 Java 25，26.1/26.2 独立维护。
-
-- **命名规则**：`CancelBlockUpdate-<模组版本>-mc<适用MC版本范围>`。`1.1.2` 是模组自身版本（所有分支相同，与上游一致）；`mc` 后面就是该 jar 适用的 Minecraft 版本范围。
-- **一个 jar 为什么能覆盖多个 MC 小版本**：这些版本之间本模组用到的游戏 API 没有变化。对应范围已写入各分支 `fabric.mod.json` 的 `depends.minecraft`，游戏加载时 Fabric 会自动校验，版本不匹配会拒绝加载（不会崩溃）。
-- **拿不准时**：选 `mc` 后缀覆盖你 MC 版本的 jar 即可（例如 MC 1.21.5 → 用 `UpdatedCancelBlockUpdate-1.1.2-mc1.21.4-1.21.8.jar`；MC 1.21.9 → 用 `UpdatedCancelBlockUpdate-1.1.2-mc1.21.9-1.21.10.jar`；MC 1.21.11 → 用 `UpdatedCancelBlockUpdate-1.1.2-mc1.21.11.jar`）。
-- `main` 分支指向最新的支持版本。
-
 ## 新增游戏规则
 
-- `ucbu:off`：为`false`时，取消所有更新；为`true`即原版；默认为`false`。
+- `cancelblockupdate:off`：为`false`时，取消所有更新；为`true`即原版；默认为`false`。
 
-- `ucbu:replace`：为`false`时，草、蕨等方块不能被直接替换；为`true`即原版；默认为`false`。
+- `cancelblockupdate:replace`：为`false`时，草、蕨等方块不能被直接替换；为`true`即原版；默认为`false`。
 
 ## 新增指令
 
-- `/ucbu random <pos>`：触发`pos`处方块的随机刻。
+- `/cancelblockupdate random <pos>`：触发`pos`处方块的随机刻。
 
-- `/ucbu schedule <pos>`：触发`pos`处方块的计划刻。
+- `/cancelblockupdate schedule <pos>`：触发`pos`处方块的计划刻。
   建议搭配调整方块状态的调试棒使用。
 
 ## 开发 / 发布
