@@ -18,10 +18,10 @@ public final class CBUClientModInitializer implements ClientModInitializer {
         ClientPlayNetworking.registerGlobalReceiver(CBUPayloads.SyncPayload.ID, (payload, context) -> {
             context.client().execute(() -> {
                 var key = CBURegistries.BOOL_RULE.get(payload.ruleId());
-                var player = context.client().player;
-                if (player == null) return;
-                CBUGameRules.CACHES.get(key).put(player.getEntityWorld(), payload.value());
-                CancelBlockUpdate.LOGGER.debug((Object) (player.getEntityWorld() + "?" + key + "???" + payload.value()));
+                var world = context.client().getWorld();
+                if (world == null) return;
+                CBUGameRules.CACHES.get(key).put(world, payload.value());
+                CancelBlockUpdate.LOGGER.debug((Object) (world + "的" + key + "已改为" + payload.value()));
             });
         });
     }
