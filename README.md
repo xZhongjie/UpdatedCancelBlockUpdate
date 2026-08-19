@@ -1,5 +1,5 @@
 [![Modrinth](https://img.shields.io/modrinth/dt/cancel-block-update?logo=modrinth&label=&suffix=%20&style=flat&color=242629&labelColor=5ca424&logoColor=1c1c1c)](https://modrinth.com/mod/cancel-block-update)
-![Minecraft](https://img.shields.io/badge/Available%20for-MC%201.19.2%20~%201.21.11-c70039)
+![Minecraft](https://img.shields.io/badge/Available%20for-MC%201.19.2%20~%2026.2-c70039)
 ![Fabric](https://img.shields.io/badge/Mod%20loader-Fabric-1976d2)
 
 [![Fabric](https://cdn.discordapp.com/attachments/705864145169416313/969720133998239794/fabric_supported.png)](https://fabricmc.net/)
@@ -26,7 +26,7 @@
 | `UpdatedCancelBlockUpdate-1.1.2-mc1.21.8-1.21.10.jar` | 1.21.8 ~ 1.21.10 | `1.21.8` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.8)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
 | `UpdatedCancelBlockUpdate-1.1.2-mc1.21.11+.jar` | 1.21.11+ | `1.21.11` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.11)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
 
-> **注意**：1.21.11 起 Minecraft 重构了游戏规则系统（`GameRules` 移到 `world.rule` 包，`Key/Type/Rule` 改为 `GameRule/GameRuleType`），所以 1.21.11 单独一个分支；`1.21.4`/`1.21.8` 分支的 jar **不适用于 1.21.11 及以上**（范围已通过 `depends.minecraft` 收紧，加载时会直接拒绝，不会崩溃）。
+> **注意**：1.21.11 起 Minecraft 重构了游戏规则系统（见上）；26.x 起 Minecraft 改为 Mojang 官方命名且要求 Java 25，26.1/26.2 分支独立维护。（`GameRules` 移到 `world.rule` 包，`Key/Type/Rule` 改为 `GameRule/GameRuleType`），所以 1.21.11 单独一个分支；`1.21.4`/`1.21.8` 分支的 jar **不适用于 1.21.11 及以上**（范围已通过 `depends.minecraft` 收紧，加载时会直接拒绝，不会崩溃）。
 
 - **命名规则**：`CancelBlockUpdate-<模组版本>-mc<适用MC版本范围>`。`1.1.2` 是模组自身版本（所有分支相同，与上游一致）；`mc` 后面就是该 jar 适用的 Minecraft 版本范围。
 - **一个 jar 为什么能覆盖多个 MC 小版本**：这些版本之间本模组用到的游戏 API 没有变化。对应范围已写入各分支 `fabric.mod.json` 的 `depends.minecraft`，游戏加载时 Fabric 会自动校验，版本不匹配会拒绝加载（不会崩溃）。
@@ -51,3 +51,4 @@
 - 本仓库使用 GitHub Actions 自动构建并发布：推送到任意版本分支会触发 `Build`；推送形如 `v*` 的 tag（例如 `v1.1.2-mc1.21.8+`）会自动构建并把 jar 上传为 GitHub Release。
 - 每个分支的 `gradle.properties` 声明各自的 Minecraft / Yarn / Fabric Loader / Fabric API 版本、`mod_version`、`mc_version_range`（jar 名里 `mc` 后缀的内容）与 `java_version`（编译目标版本）。CI 统一使用 JDK 21 运行 Gradle（Loom 1.17+ 要求），再通过 `options.release` 编译出对应 Java 版本的字节码（旧分支为 Java 17）。
 - 本地构建：`./gradlew build`（产物在 `build/libs/`）；需要代理时请把代理配置写入 `~/.gradle/gradle.properties`，不要提交到仓库。
+

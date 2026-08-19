@@ -22,17 +22,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Loom 1.17+ ????? JDK ?? Gradle?26.x ???? Java 25?????? Java 21?
-      # ??????? gradle.properties ? java_version ???
+      # Loom 1.17+ ????? JDK ?? Gradle?26.x ???? Java 25?????? Java 21
+      # ???? java_version=17 ??? JDK 21 ????? options.release=17 ????
       - name: Read java_version
         id: props
-        run: echo "java_version=$(grep '^java_version' gradle.properties | cut -d= -f2 | tr -d ' ')" >> "$GITHUB_OUTPUT"
+        run: |
+          JV=$(grep '^java_version' gradle.properties | cut -d= -f2 | tr -d ' ')
+          if [ "$JV" = "25" ]; then echo "jdk=25" >> "$GITHUB_OUTPUT"; else echo "jdk=21" >> "$GITHUB_OUTPUT"; fi
 
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: ${{ steps.props.outputs.java_version }}
+          java-version: ${{ steps.props.outputs.jdk }}
           cache: gradle
 
       - name: Make gradlew executable
