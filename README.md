@@ -1,6 +1,7 @@
 # 取消方块更新 (UCBU)
 
 > 本仓库为 [CancelBlockUpdate](https://github.com/Phoupraw/CancelBlockUpdate)（原作者 Phoupraw，[mcmod](https://www.mcmod.cn/class/5695.html)）的更新维护版，主要新增了对新版本 Minecraft（1.20.4 及以后）的支持与多版本自动发布流程。
+
 **【警告】** 在世界生成时启用本模组的效果可能会产生大量浮空方块，如果想生成正常的世界，请提前修改游戏规则。
 
 取消方块更新、方块计划刻、随机刻和流体计划刻，允许无条件放置方块。
@@ -35,10 +36,4 @@
 
 - `/cancelblockupdate schedule <pos>`：触发`pos`处方块的计划刻。
   建议搭配调整方块状态的调试棒使用。
-
-## 开发 / 发布
-
-- 本仓库使用 GitHub Actions 自动构建并发布：推送到任意版本分支会触发 `Build`；推送形如 `v*` 的 tag（例如 `v1.1.2-mc26.2`）会自动构建并把 jar 上传为 GitHub Release。
-- 每个分支的 `gradle.properties` 声明各自的 Minecraft / Yarn / Fabric Loader / Fabric API 版本、`mod_version`、`mc_version_range`（jar 名里 `mc` 后缀的内容）与 `java_version`（编译目标版本）。CI 统一使用 JDK 21 运行 Gradle（Loom 1.17+ 要求），再通过 `options.release` 编译出对应 Java 版本的字节码（旧分支为 Java 17）。
-- 本地构建：`./gradlew build`（产物在 `build/libs/`）；需要代理时请把代理配置写入 `~/.gradle/gradle.properties`，不要提交到仓库。
 
