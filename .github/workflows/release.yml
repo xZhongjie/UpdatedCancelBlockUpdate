@@ -19,7 +19,8 @@ jobs:
       - name: Read version info
         id: props
         run: |
-          echo "java_version=$(grep '^java_version' gradle.properties | cut -d= -f2 | tr -d ' ')" >> "$GITHUB_OUTPUT"
+          JV=$(grep '^java_version' gradle.properties | cut -d= -f2 | tr -d ' ')
+          if [ "$JV" = "25" ]; then echo "jdk=25" >> "$GITHUB_OUTPUT"; else echo "jdk=21" >> "$GITHUB_OUTPUT"; fi
           echo "mod_version=$(grep '^mod_version' gradle.properties | cut -d= -f2 | tr -d ' ')" >> "$GITHUB_OUTPUT"
           echo "mc_version_range=$(grep '^mc_version_range' gradle.properties | cut -d= -f2 | tr -d ' ')" >> "$GITHUB_OUTPUT"
 
@@ -27,7 +28,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: ${{ steps.props.outputs.java_version }}
+          java-version: ${{ steps.props.outputs.jdk }}
           cache: gradle
 
       - name: Make gradlew executable
