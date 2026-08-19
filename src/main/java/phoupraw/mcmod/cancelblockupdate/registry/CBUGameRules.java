@@ -7,7 +7,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerLevelAccessor;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
@@ -84,8 +83,8 @@ public final class CBUGameRules {
         var cache = CACHES.get(key);
         Boolean value = cache.get(world);
         if (value != null) return value;
-        if (world instanceof ServerLevelAccessor serverLevelAccessor) {
-            value = serverLevelAccessor.getLevel().getServer().getGameRules().get(key);
+        if (world instanceof ServerLevel serverLevel) {
+            value = serverLevel.getServer().getGameRules().get(key);
         } else {
             value = false;
             StringWriter writer = new StringWriter();
@@ -100,3 +99,4 @@ public final class CBUGameRules {
     }
 
 }
+
