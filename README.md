@@ -42,3 +42,4 @@
 - 每个分支的 `gradle.properties` 声明各自的 Minecraft / Yarn / Fabric Loader / Fabric API 版本、`mod_version`、`mc_version_range`（jar 名里 `mc` 后缀的内容）与 `java_version`（编译目标版本）。CI 统一使用 JDK 21 运行 Gradle（Loom 1.17+ 要求），再通过 `options.release` 编译出对应 Java 版本的字节码（旧分支为 Java 17）。
 - 本地构建：`./gradlew build`（产物在 `build/libs/`）；需要代理时请把代理配置写入 `~/.gradle/gradle.properties`，不要提交到仓库。
 
+
