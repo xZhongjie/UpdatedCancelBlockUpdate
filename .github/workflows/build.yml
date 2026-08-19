@@ -10,6 +10,8 @@ on:
       - '1.21.4'
       - '1.21.8'
       - '1.21.11'
+      - '26.1'
+      - '26.2'
   pull_request:
   workflow_dispatch:
 
@@ -20,13 +22,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Loom 1.17+ 需要 Java 21 运行 Gradle；编译目标版本由 gradle.properties 的 java_version 决定
-      # （JDK 21 可通过 options.release 编译出 Java 17 字节码，供 1.19.2/1.20.x 分支使用）。
-      - name: Set up JDK 21
+      # Loom 1.17+ ????? JDK ?? Gradle?26.x ???? Java 25?????? Java 21
+      # ???? java_version=17 ??? JDK 21 ????? options.release=17 ????
+      - name: Read java_version
+        id: props
+        run: |
+          JV=$(grep '^java_version' gradle.properties | cut -d= -f2 | tr -d ' ')
+          if [ "$JV" = "25" ]; then echo "jdk=25" >> "$GITHUB_OUTPUT"; else echo "jdk=21" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 21
+          java-version: ${{ steps.props.outputs.jdk }}
           cache: gradle
 
       - name: Make gradlew executable
@@ -38,7 +46,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: CancelBlockUpdate-${{ github.ref_name }}
+          name: UpdatedCancelBlockUpdate-${{ github.ref_name }}
           path: |
             build/libs/*.jar
             !build/libs/*-sources.jar
