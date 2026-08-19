@@ -14,10 +14,10 @@
 | jar 文件名 | 适用的 Minecraft 版本 | 分支 | 构建状态 |
 |---|---|---|---|
 | `UpdatedCancelBlockUpdate-1.1.2-mc1.19-1.19.2.jar` | 1.19 ~ 1.19.2 | `1.19.2` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.19.2)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
-| `UpdatedCancelBlockUpdate-1.1.2-mc1.20.1-1.20.4.jar` | 1.20.1 ~ 1.20.4 | `1.20.1` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.20.1)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
+| `UpdatedCancelBlockUpdate-1.1.2-mc1.20.1-1.20.3.jar` | 1.20.1 ~ 1.20.3 | `1.20.1` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.20.1)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
 | `UpdatedCancelBlockUpdate-1.1.2-mc1.20.4.jar` | 1.20.4 | `1.20.4` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.20.4)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
-| `UpdatedCancelBlockUpdate-1.1.2-mc1.21.1.jar` | 1.21.1 | `1.21.1` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.1)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
-| `UpdatedCancelBlockUpdate-1.1.2-mc1.21.4-1.21.8.jar` | 1.21.4 ~ 1.21.8 | `1.21.4` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.4)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
+| `UpdatedCancelBlockUpdate-1.1.2-mc1.21.0-1.21.1.jar` | 1.21.0 ~ 1.21.1 | `1.21.1` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.1)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
+| `UpdatedCancelBlockUpdate-1.1.2-mc1.21.2-1.21.8.jar` | 1.21.2 ~ 1.21.8 | `1.21.4` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.4)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
 | `UpdatedCancelBlockUpdate-1.1.2-mc1.21.8.jar` | 1.21.8 | `1.21.8` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.8)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
 | `UpdatedCancelBlockUpdate-1.1.2-mc1.21.9-1.21.10.jar` | 1.21.9 ~ 1.21.10 | `1.21.10` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.10)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
 | `UpdatedCancelBlockUpdate-1.1.2-mc1.21.11.jar` | 1.21.11 | `1.21.11` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.11)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
@@ -42,5 +42,6 @@
 - 本仓库使用 GitHub Actions 自动构建并发布：推送到任意版本分支会触发 `Build`；推送形如 `v*` 的 tag（例如 `v1.1.2-mc26.2`）会自动构建并把 jar 上传为 GitHub Release。
 - 每个分支的 `gradle.properties` 声明各自的 Minecraft / Yarn / Fabric Loader / Fabric API 版本、`mod_version`、`mc_version_range`（jar 名里 `mc` 后缀的内容）与 `java_version`（编译目标版本）。CI 统一使用 JDK 21 运行 Gradle（Loom 1.17+ 要求），再通过 `options.release` 编译出对应 Java 版本的字节码（旧分支为 Java 17）。
 - 本地构建：`./gradlew build`（产物在 `build/libs/`）；需要代理时请把代理配置写入 `~/.gradle/gradle.properties`，不要提交到仓库。
+
 
 
