@@ -3,20 +3,19 @@ package phoupraw.mcmod.cancelblockupdate.registry;
 import com.mojang.brigadier.CommandDispatcher;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents.Load;
+import net.fabricmc.fabric.api.entity.event.v1.ServerEntityLevelChangeEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLevelEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.block.BlockState;
-import net.minecraft.command.CommandRegistryAccess;
-import net.minecraft.command.argument.BlockPosArgumentType;
+import net.minecraft.commands.CommandBuildContext;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.command.CommandManager;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.ApiStatus;
 import phoupraw.mcmod.cancelblockupdate.CancelBlockUpdate;
 
@@ -28,64 +27,53 @@ public final class CBUModInitializer implements ModInitializer {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private static void loadClasses() {
         CBUGameRules.CACHES.hashCode();
-
     }
 
-    /**
-     在一个服务端世界被载入时，将其放入缓存。虽然说即使没有此方法，{@link CBUGameRules#getOff}也可以处理那些新加载的世界，但是还是用这个方法比较好。
-     @see Load#onWorldLoad
-     */
-    private static void onWorldLoad(MinecraftServer server, ServerWorld world) {
+    private static void onLevelLoad(MinecraftServer server, ServerLevel level) {
         for (var key : CBURegistries.BOOL_RULE) {
-            CBUGameRules.CACHES.get(key).put(world, (Boolean) server.getGameRules().getValue(key));
+            CBUGameRules.CACHES.get(key).put(level, server.getGameRules().get(key));
         }
     }
 
-    private static void afterChangeWorld(ServerPlayerEntity player, ServerWorld origin, ServerWorld destination) {
+    private static void afterChangeLevel(ServerPlayer player, ServerLevel origin, ServerLevel destination) {
         var server = Objects.requireNonNull(player.getServer(), "player=" + player);
         for (var key : CBURegistries.BOOL_RULE) {
-            ServerPlayNetworking.send(player, new CBUPayloads.SyncPayload((byte) CBURegistries.BOOL_RULE.getRawId(key), (Boolean) server.getGameRules().getValue(key)));
+            ServerPlayNetworking.send(player, new CBUPayloads.SyncPayload((byte) CBURegistries.BOOL_RULE.getId(key), server.getGameRules().get(key)));
         }
     }
 
-    /**
-     收到客户端的同步请求后，把当前所有游戏规则的值发送给该客户端。
-     */
     private static void onRequestSync(CBUPayloads.RequestSyncPayload payload, ServerPlayNetworking.Context context) {
         context.server().execute(() -> {
-            ServerPlayerEntity player = context.player();
+            ServerPlayer player = context.player();
             if (player == null) return;
             MinecraftServer server = context.server();
             for (var key : CBURegistries.BOOL_RULE) {
-                ServerPlayNetworking.send(player, new CBUPayloads.SyncPayload((byte) CBURegistries.BOOL_RULE.getRawId(key), (Boolean) server.getGameRules().getValue(key)));
+                ServerPlayNetworking.send(player, new CBUPayloads.SyncPayload((byte) CBURegistries.BOOL_RULE.getId(key), server.getGameRules().get(key)));
             }
         });
     }
 
     /**
-     注册指令，目前只有schedule和random两条子命令。
-     @see CommandRegistrationCallback#register
+     ?????????schedule?random??????
      */
-    private static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        dispatcher.register(CommandManager.literal(CancelBlockUpdate.MOD_ID)
-          .then(CommandManager.literal("schedule")
-            .then(CommandManager.argument("pos", BlockPosArgumentType.blockPos())
+    private static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext registryAccess, Commands.CommandSelection environment) {
+        dispatcher.register(Commands.literal(CancelBlockUpdate.MOD_ID)
+          .then(Commands.literal("schedule")
+            .then(Commands.argument("pos", BlockPosArgument.blockPos())
               .executes(context -> {
-                  BlockPos pos = BlockPosArgumentType.getBlockPos(context, "pos");
-                  ServerWorld world = context.getSource().getWorld();
-                  BlockState blockState = world.getBlockState(pos);
-                  //noinspection deprecation
-                  blockState.getBlock().scheduledTick(blockState, world, pos, world.getRandom());
+                  BlockPos pos = BlockPosArgument.getLoadedBlockPos(context, "pos");
+                  ServerLevel level = context.getSource().getLevel();
+                  BlockState blockState = level.getBlockState(pos);
+                  blockState.getBlock().tick(blockState, level, pos, level.getRandom());
                   return 1;
               })))
-          .then(CommandManager.literal("random")
-            .then(CommandManager.argument("pos", BlockPosArgumentType.blockPos())
+          .then(Commands.literal("random")
+            .then(Commands.argument("pos", BlockPosArgument.blockPos())
               .executes(context -> {
-                  BlockPos pos = BlockPosArgumentType.getBlockPos(context, "pos");
-                  ServerWorld world = context.getSource().getWorld();
-                  BlockState blockState = world.getBlockState(pos);
-                  //noinspection deprecation
-                  blockState.getBlock().randomTick(blockState, world, pos, world.getRandom());
+                  BlockPos pos = BlockPosArgument.getLoadedBlockPos(context, "pos");
+                  ServerLevel level = context.getSource().getLevel();
+                  BlockState blockState = level.getBlockState(pos);
+                  blockState.getBlock().randomTick(blockState, level, pos, level.getRandom());
                   return 1;
               }))));
     }
@@ -93,12 +81,12 @@ public final class CBUModInitializer implements ModInitializer {
     @Override
     public void onInitialize() {
         loadClasses();
-        PayloadTypeRegistry.playC2S().register(CBUPayloads.RequestSyncPayload.ID, CBUPayloads.RequestSyncPayload.CODEC);
-        PayloadTypeRegistry.playS2C().register(CBUPayloads.SyncPayload.ID, CBUPayloads.SyncPayload.CODEC);
-        ServerPlayNetworking.registerGlobalReceiver(CBUPayloads.RequestSyncPayload.ID, CBUModInitializer::onRequestSync);
-        ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register(CBUModInitializer::afterChangeWorld);
+        PayloadTypeRegistry.serverboundPlay().register(CBUPayloads.RequestSyncPayload.TYPE, CBUPayloads.RequestSyncPayload.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(CBUPayloads.SyncPayload.TYPE, CBUPayloads.SyncPayload.CODEC);
+        ServerPlayNetworking.registerGlobalReceiver(CBUPayloads.RequestSyncPayload.TYPE, CBUModInitializer::onRequestSync);
+        ServerEntityLevelChangeEvents.AFTER_PLAYER_CHANGE_LEVEL.register(CBUModInitializer::afterChangeLevel);
         CommandRegistrationCallback.EVENT.register(CBUModInitializer::register);
-        ServerWorldEvents.LOAD.register(CBUModInitializer::onWorldLoad);
+        ServerLevelEvents.LOAD.register(CBUModInitializer::onLevelLoad);
     }
 
 }

@@ -1,14 +1,11 @@
 package phoupraw.mcmod.cancelblockupdate.registry;
 
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.packet.CustomPayload;
-import phoupraw.mcmod.cancelblockupdate.CancelBlockUpdate;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
 /**
- * 本模组在 1.20.5+ 使用的基于 {@link CustomPayload} 的自定义网络包。
- * <br/>
- * 旧版本（1.20.4 及以下）直接使用 Identifier 通道，见对应分支的代码。
+ * 26.x ???????? {@link CustomPacketPayload} ? {@link StreamCodec}?Mojang ????
  */
 public final class CBUPayloads {
 
@@ -16,38 +13,37 @@ public final class CBUPayloads {
     }
 
     /**
-     * 客户端在加入服务器时发送，请求服务器同步所有游戏规则的值。
+     * ?????????????????????????????
      */
-    public record RequestSyncPayload() implements CustomPayload {
-        public static final CustomPayload.Id<RequestSyncPayload> ID = new CustomPayload.Id<>(CBUIdentifiers.REQUEST_SYNC);
-        public static final PacketCodec<PacketByteBuf, RequestSyncPayload> CODEC = PacketCodec.of((payload, buf) -> {
-        }, buf -> new RequestSyncPayload());
+    public record RequestSyncPayload() implements CustomPacketPayload {
+        public static final CustomPacketPayload.Type<RequestSyncPayload> TYPE = CustomPacketPayload.createType(CBUIdentifiers.REQUEST_SYNC.toString());
+        public static final StreamCodec<FriendlyByteBuf, RequestSyncPayload> CODEC = StreamCodec.unit(new RequestSyncPayload());
 
         @Override
-        public Id<? extends CustomPayload> getId() {
-            return ID;
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
         }
     }
 
     /**
-     * 服务端发送给客户端，同步一个游戏规则的值。
+     * ?????????????????????
      */
-    public record SyncPayload(byte ruleId, boolean value) implements CustomPayload {
-        public static final CustomPayload.Id<SyncPayload> ID = new CustomPayload.Id<>(CBUIdentifiers.CHANNEL);
-        public static final PacketCodec<PacketByteBuf, SyncPayload> CODEC = PacketCodec.of(SyncPayload::write, SyncPayload::read);
+    public record SyncPayload(byte ruleId, boolean value) implements CustomPacketPayload {
+        public static final CustomPacketPayload.Type<SyncPayload> TYPE = CustomPacketPayload.createType(CBUIdentifiers.CHANNEL.toString());
+        public static final StreamCodec<FriendlyByteBuf, SyncPayload> CODEC = CustomPacketPayload.codec(SyncPayload::write, SyncPayload::read);
 
-        public static SyncPayload read(PacketByteBuf buf) {
+        public static SyncPayload read(FriendlyByteBuf buf) {
             return new SyncPayload(buf.readByte(), buf.readBoolean());
         }
 
-        public static void write(SyncPayload payload, PacketByteBuf buf) {
+        public static void write(SyncPayload payload, FriendlyByteBuf buf) {
             buf.writeByte(payload.ruleId);
             buf.writeBoolean(payload.value);
         }
 
         @Override
-        public Id<? extends CustomPayload> getId() {
-            return ID;
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
         }
     }
 

@@ -1,20 +1,19 @@
 package phoupraw.mcmod.cancelblockupdate.mixin;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.block.WireOrientation;
-import net.minecraft.world.tick.ScheduledTickView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.redstone.Orientation;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,66 +22,66 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import phoupraw.mcmod.cancelblockupdate.registry.CBUGameRules;
 
-@Mixin(AbstractBlock.AbstractBlockState.class)
+@Mixin(BlockBehaviour.BlockStateBase.class)
 abstract class MAbstractBlockState {
 
     @Shadow
     public abstract Block getBlock();
 
     @Shadow
-    public abstract VoxelShape getRaycastShape(BlockView world, BlockPos pos);
+    public abstract VoxelShape getShape(BlockPos pos);
 
-    //以下是取消方块更新
-    @Inject(method = "getStateForNeighborUpdate", at = @At("HEAD"), cancellable = true)
-    private void cancelGetStateForNeighborUpdate(WorldView world, ScheduledTickView scheduledTickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random, CallbackInfoReturnable<BlockState> cir) {
+    //?????????
+    @Inject(method = "updateShape", at = @At("HEAD"), cancellable = true)
+    private void cancelUpdateShape(LevelReader world, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random, CallbackInfoReturnable<BlockState> cir) {
         if (!CBUGameRules.getOff(world)) {
             //noinspection ConstantConditions
             cir.setReturnValue((BlockState) (Object) this);
         }
     }
 
-    @Inject(method = "neighborUpdate", at = @At("HEAD"), cancellable = true)
-    private void cancelNeighborUpdate(World world, BlockPos pos, Block block, WireOrientation wireOrientation, boolean notify, CallbackInfo ci) {
+    @Inject(method = "handleNeighborChanged", at = @At("HEAD"), cancellable = true)
+    private void cancelHandleNeighborChanged(Level world, BlockPos pos, Block block, Orientation orientation, boolean notify, CallbackInfo ci) {
         if (!CBUGameRules.getOff(world)) {
             ci.cancel();
         }
     }
 
-    @Inject(method = "updateNeighbors*", at = @At("HEAD"), cancellable = true)
-    private void cancelUpdateNeighbors(WorldAccess world, BlockPos pos, int flags, CallbackInfo ci) {
+    @Inject(method = "updateNeighbourShapes*", at = @At("HEAD"), cancellable = true)
+    private void cancelUpdateNeighbourShapes(LevelAccessor world, BlockPos pos, int flags, CallbackInfo ci) {
         if (!CBUGameRules.getOff(world)) {
             ci.cancel();
         }
     }
 
-    //以下是取消计划刻
-    @Inject(method = "scheduledTick", at = @At("HEAD"), cancellable = true)
-    private void cancelScheduledTick(ServerWorld world, BlockPos pos, Random random, CallbackInfo ci) {
+    //????????
+    @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
+    private void cancelTick(ServerLevel world, BlockPos pos, RandomSource random, CallbackInfo ci) {
         if (!CBUGameRules.getOff(world)) {
             ci.cancel();
         }
     }
 
-    //以下是强制允许放置
-    @Inject(method = "canPlaceAt", at = @At("HEAD"), cancellable = true)
-    private void passCanPlaceAt(WorldView world, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
+    //?????????
+    @Inject(method = "canSurvive", at = @At("HEAD"), cancellable = true)
+    private void passCanSurvive(LevelReader world, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         if (!CBUGameRules.getOff(world)) {
             cir.setReturnValue(true);
         }
     }
 
     @Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
-    private void cancelRandomTick(ServerWorld world, BlockPos pos, Random random, CallbackInfo ci) {
+    private void cancelRandomTick(ServerLevel world, BlockPos pos, RandomSource random, CallbackInfo ci) {
         if (!CBUGameRules.getOff(world)) {
             ci.cancel();
         }
     }
 
-    @Inject(method = "canReplace", at = @At("HEAD"), cancellable = true)
-    private void setCanReplace(ItemPlacementContext context, CallbackInfoReturnable<Boolean> cir) {
-        World world = context.getWorld();
-        BlockPos pos = context.getBlockPos();
-        VoxelShape shape = world.getBlockState(pos).getOutlineShape(world, pos);
+    @Inject(method = "canBeReplaced", at = @At("HEAD"), cancellable = true)
+    private void setCanBeReplaced(BlockPlaceContext context, CallbackInfoReturnable<Boolean> cir) {
+        Level world = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        VoxelShape shape = world.getBlockState(pos).getShape(world, pos);
         if (!CBUGameRules.get(CBUGameRules.REPLACE, world) && !shape.isEmpty()) {
             cir.setReturnValue(false);
         }

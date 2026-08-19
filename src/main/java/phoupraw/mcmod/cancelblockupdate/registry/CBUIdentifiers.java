@@ -1,6 +1,6 @@
 package phoupraw.mcmod.cancelblockupdate.registry;
 
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 import phoupraw.mcmod.cancelblockupdate.CancelBlockUpdate;
 
 public final class CBUIdentifiers {
@@ -13,7 +13,7 @@ public final class CBUIdentifiers {
       BOOL_RULE = of("bool_rule");
 
     public static Identifier of(String path) {
-        return Identifier.of(CancelBlockUpdate.MOD_ID, path);
+        return Identifier.fromNamespaceAndPath(CancelBlockUpdate.MOD_ID, path);
     }
 
     private CBUIdentifiers() {
