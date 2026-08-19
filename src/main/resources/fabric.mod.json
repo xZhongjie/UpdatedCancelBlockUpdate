@@ -3,7 +3,7 @@
   "id": "ucbu",
   "version": "${version}",
   "name": "UpdatedCancelBlockUpdate",
-  "description": "更新版取消方块更新 (UCBU)：阻止方块更新、方块计划刻、随机刻、放置可行性检查、流体计划刻、铁轨自动转角。阻止草和蕨等植物被替换。",
+  "description": "????????? (UCBU)???????????????????????????????????????????????????",
   "authors": ["Phoupraw"],
   "contact": {
     "homepage": "https://www.mcmod.cn/class/5695.html",
@@ -21,7 +21,7 @@
   "mixins": ["cancelblockupdate.mixins.json"],
   "accessWidener": "cancelblockupdate.accesswidener",
   "depends": {
-    "minecraft": ">=1.21.8 <1.21.11",
+    "minecraft": ">=1.21.9 <1.21.11",
     "fabricloader": ">=0.16.0",
     "fabric-api": "*"
   },
@@ -39,5 +39,7 @@
     }
   }
 }
+
+
 
 
