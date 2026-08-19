@@ -16,18 +16,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Read version info from gradle.properties
+      - name: Read version info
         id: props
         run: |
+          JV=$(grep '^java_version' gradle.properties | cut -d= -f2 | tr -d ' ')
+          if [ "$JV" = "25" ]; then echo "jdk=25" >> "$GITHUB_OUTPUT"; else echo "jdk=21" >> "$GITHUB_OUTPUT"; fi
           echo "mod_version=$(grep '^mod_version' gradle.properties | cut -d= -f2 | tr -d ' ')" >> "$GITHUB_OUTPUT"
           echo "mc_version_range=$(grep '^mc_version_range' gradle.properties | cut -d= -f2 | tr -d ' ')" >> "$GITHUB_OUTPUT"
 
-      # Loom 1.17+ 需要 Java 21 运行 Gradle；编译目标版本由 gradle.properties 的 java_version 决定。
-      - name: Set up JDK 21
+      - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 21
+          java-version: ${{ steps.props.outputs.jdk }}
           cache: gradle
 
       - name: Make gradlew executable
@@ -40,7 +41,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
-          name: Cancel Block Update ${{ steps.props.outputs.mod_version }} (MC ${{ steps.props.outputs.mc_version_range }})
+          name: UpdatedCancelBlockUpdate ${{ steps.props.outputs.mod_version }} (MC ${{ steps.props.outputs.mc_version_range }})
           files: |
             build/libs/*.jar
             !build/libs/*-sources.jar
