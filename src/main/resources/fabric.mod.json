@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "ucbu",
+  "id": "cancelblockupdate",
   "version": "${version}",
   "name": "UpdatedCancelBlockUpdate",
   "description": "更新版取消方块更新 (UCBU)：阻止方块更新、方块计划刻、随机刻、放置可行性检查、流体计划刻、铁轨自动转角。阻止草和蕨等植物被替换。",
@@ -39,5 +39,6 @@
     }
   }
 }
+
 
 
