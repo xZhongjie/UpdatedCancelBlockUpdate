@@ -53,7 +53,7 @@ jar {
 }
 
 loom {
-    accessWidenerPath = file("src/main/resources/${mod_id}.accesswidener")
+    accessWidenerPath = file("src/main/resources/cancelblockupdate.accesswidener")
     runs {
         // This adds a new gradle task that runs the datagen API: "gradlew runDatagenClient"
         datagenClient {
@@ -93,3 +93,4 @@ publishing {
         // retrieving dependencies.
     }
 }
+

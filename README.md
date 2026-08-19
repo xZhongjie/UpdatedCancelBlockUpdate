@@ -14,23 +14,23 @@
 
 ## 支持的 Minecraft 版本
 
-每个 Minecraft 大版本一个分支。**jar 文件名直接写明适用的 Minecraft 版本范围**，命名规则为 `CancelBlockUpdate-<模组版本>-mc<适用MC版本范围>.jar`，按下面这张表选：
+每个 Minecraft 大版本一个分支。本模组 (UCBU) 的 **jar 文件名直接写明适用的 Minecraft 版本范围**，命名规则为 `CancelBlockUpdate-<模组版本>-mc<适用MC版本范围>.jar`，按下面这张表选：
 
 | jar 文件名 | 适用的 Minecraft 版本 | 分支 | 构建状态 |
 |---|---|---|---|
-| `CancelBlockUpdate-1.1.2-mc1.19-1.19.2.jar` | 1.19 ~ 1.19.2 | `1.19.2` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.19.2)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
-| `CancelBlockUpdate-1.1.2-mc1.20.1-1.20.4.jar` | 1.20.1 ~ 1.20.4 | `1.20.1` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.20.1)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
-| `CancelBlockUpdate-1.1.2-mc1.20.4.jar` | 1.20.4 | `1.20.4` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.20.4)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
-| `CancelBlockUpdate-1.1.2-mc1.21.1.jar` | 1.21.1 | `1.21.1` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.1)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
-| `CancelBlockUpdate-1.1.2-mc1.21.4-1.21.10.jar` | 1.21.4 ~ 1.21.10 | `1.21.4` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.4)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
-| `CancelBlockUpdate-1.1.2-mc1.21.8-1.21.10.jar` | 1.21.8 ~ 1.21.10 | `1.21.8` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.8)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
-| `CancelBlockUpdate-1.1.2-mc1.21.11+.jar` | 1.21.11+ | `1.21.11` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.11)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
+| `UpdatedCancelBlockUpdate-1.1.2-mc1.19-1.19.2.jar` | 1.19 ~ 1.19.2 | `1.19.2` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.19.2)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
+| `UpdatedCancelBlockUpdate-1.1.2-mc1.20.1-1.20.4.jar` | 1.20.1 ~ 1.20.4 | `1.20.1` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.20.1)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
+| `UpdatedCancelBlockUpdate-1.1.2-mc1.20.4.jar` | 1.20.4 | `1.20.4` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.20.4)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
+| `UpdatedCancelBlockUpdate-1.1.2-mc1.21.1.jar` | 1.21.1 | `1.21.1` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.1)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
+| `UpdatedCancelBlockUpdate-1.1.2-mc1.21.4-1.21.10.jar` | 1.21.4 ~ 1.21.10 | `1.21.4` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.4)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
+| `UpdatedCancelBlockUpdate-1.1.2-mc1.21.8-1.21.10.jar` | 1.21.8 ~ 1.21.10 | `1.21.8` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.8)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
+| `UpdatedCancelBlockUpdate-1.1.2-mc1.21.11+.jar` | 1.21.11+ | `1.21.11` | [![Build](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml/badge.svg?branch=1.21.11)](https://github.com/xZhongjie/UpdatedCancelBlockUpdate/actions/workflows/build.yml) |
 
 > **注意**：1.21.11 起 Minecraft 重构了游戏规则系统（`GameRules` 移到 `world.rule` 包，`Key/Type/Rule` 改为 `GameRule/GameRuleType`），所以 1.21.11 单独一个分支；`1.21.4`/`1.21.8` 分支的 jar **不适用于 1.21.11 及以上**（范围已通过 `depends.minecraft` 收紧，加载时会直接拒绝，不会崩溃）。
 
 - **命名规则**：`CancelBlockUpdate-<模组版本>-mc<适用MC版本范围>`。`1.1.2` 是模组自身版本（所有分支相同，与上游一致）；`mc` 后面就是该 jar 适用的 Minecraft 版本范围。
 - **一个 jar 为什么能覆盖多个 MC 小版本**：这些版本之间本模组用到的游戏 API 没有变化。对应范围已写入各分支 `fabric.mod.json` 的 `depends.minecraft`，游戏加载时 Fabric 会自动校验，版本不匹配会拒绝加载（不会崩溃）。
-- **拿不准时**：选 `mc` 后缀覆盖你 MC 版本的 jar 即可（例如 MC 1.21.5 → 用 `CancelBlockUpdate-1.1.2-mc1.21.4-1.21.10.jar`；MC 1.21.11 → 用 `CancelBlockUpdate-1.1.2-mc1.21.11+.jar`）。
+- **拿不准时**：选 `mc` 后缀覆盖你 MC 版本的 jar 即可（例如 MC 1.21.5 → 用 `UpdatedCancelBlockUpdate-1.1.2-mc1.21.4-1.21.10.jar`；MC 1.21.11 → 用 `UpdatedCancelBlockUpdate-1.1.2-mc1.21.11+.jar`）。
 - `main` 分支指向最新的支持版本。
 
 ## 新增游戏规则
