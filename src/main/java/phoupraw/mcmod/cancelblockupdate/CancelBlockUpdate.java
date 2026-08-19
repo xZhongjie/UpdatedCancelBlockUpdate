@@ -5,7 +5,8 @@ import org.apache.logging.log4j.Logger;
 
 public final class CancelBlockUpdate {
 
-    public static final String MOD_ID = "cancelblockupdate";
+    public static final String MOD_ID = "ucbu";
     public static final Logger LOGGER = LogManager.getLogger();
 
 }
+
