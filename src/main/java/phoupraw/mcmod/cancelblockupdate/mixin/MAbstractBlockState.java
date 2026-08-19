@@ -27,11 +27,7 @@ abstract class MAbstractBlockState {
 
     @Shadow
     public abstract Block getBlock();
-
-    @Shadow
-    public abstract VoxelShape getShape(BlockPos pos);
-
-    //?????????
+//?????????
     @Inject(method = "updateShape", at = @At("HEAD"), cancellable = true)
     private void cancelUpdateShape(LevelReader world, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random, CallbackInfoReturnable<BlockState> cir) {
         if (!CBUGameRules.getOff(world)) {
@@ -88,3 +84,4 @@ abstract class MAbstractBlockState {
     }
 
 }
+
