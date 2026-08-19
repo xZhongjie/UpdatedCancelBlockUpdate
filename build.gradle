@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
 }
 
-version = project.mod_version
+version = "${project.mod_version}-mc${project.mc_version_range}"
 group = project.maven_group
 
 base {
@@ -93,3 +93,4 @@ publishing {
         // retrieving dependencies.
     }
 }
+
