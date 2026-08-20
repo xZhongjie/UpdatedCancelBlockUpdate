@@ -39,10 +39,12 @@ public final class CBUGameRules {
     public static final BiConsumer<MinecraftServer, GameRules.BooleanRule> ON_CHANGE = CBUGameRules::onChange;
     public static final GameRules.Key<GameRules.BooleanRule> OFF = GameRuleRegistry.register(CBUIdentifiers.OFF.toString(), GameRules.Category.UPDATES, GameRuleFactory.createBooleanRule(false, ON_CHANGE));
     public static final GameRules.Key<GameRules.BooleanRule> REPLACE = GameRuleRegistry.register(CBUIdentifiers.REPLACE.toString(), GameRules.Category.UPDATES, GameRuleFactory.createBooleanRule(false, ON_CHANGE));
+    public static final GameRules.Key<GameRules.BooleanRule> STACK_SLABS = GameRuleRegistry.register(CBUIdentifiers.STACK_SLABS.toString(), GameRules.Category.UPDATES, GameRuleFactory.createBooleanRule(true, ON_CHANGE));
 
     static {
         Registry.register(CBURegistries.BOOL_RULE, CBUIdentifiers.OFF, OFF);
         Registry.register(CBURegistries.BOOL_RULE, CBUIdentifiers.REPLACE, REPLACE);
+        Registry.register(CBURegistries.BOOL_RULE, CBUIdentifiers.STACK_SLABS, STACK_SLABS);
         Map<GameRules.Key<GameRules.BooleanRule>, Map<WorldView, Boolean>> map = new HashMap<>();
         for (var key : CBURegistries.BOOL_RULE) map.put(key, new WeakHashMap<>());
         CACHES = map;
