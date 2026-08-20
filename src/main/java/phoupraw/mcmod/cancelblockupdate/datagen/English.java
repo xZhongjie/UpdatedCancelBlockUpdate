@@ -41,6 +41,7 @@ final class English extends FabricLanguageProvider {
           """);
         b.add(CBUGameRules.OFF.getTranslationKey(), modName + ": disable all effects of the mod");
         b.add(CBUGameRules.REPLACE.getTranslationKey(), modName + ": allow replace grass and fern");
+        b.add(CBUGameRules.STACK_SLABS.getTranslationKey(), modName + ": allow stacking slabs into double slabs");
     }
 
 }
