@@ -18,6 +18,7 @@ public final class CBUIdentifiers {
       CHANNEL = of("channel"),
       OFF = of("off"),
       REPLACE = of("replace"),
+      STACK_SLABS = of("stack_slabs"),
       BOOL_RULE = of("bool_rule");
 
     public static Identifier of(String path) {
