@@ -97,10 +97,4 @@ abstract class MAbstractBlockState {
         }
     }
 
-    private boolean canStackSlabs(ItemPlacementContext context) {
-        BlockState target = context.getWorld().getBlockState(context.getBlockPos());
-        if (!(getBlock() instanceof SlabBlock slab) || target.getBlock() != getBlock()) return false;
-        return slab.canReplace(target, context);
-    }
-
 }
