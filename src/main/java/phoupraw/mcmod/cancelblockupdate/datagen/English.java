@@ -37,6 +37,7 @@ final class English extends FabricLanguageProvider {
           ?lNew game rules:?r
           - ?ocancelblockupdate:off?r: when ?ofalse?r, cancel all block update; when ?otrue?r it is vanilla; default ?ofalse?r.
           - ?ocancelblockupdate:replace?r: when ?ofalse?r, grass, fern and so on block can't be replaced directly; when ?otrue?r it is vanilla; default ?ofalse?r.
+          - ?ocancelblockupdate:stack_slabs?r: when ?otrue?r, slabs can be stacked into double slabs; default ?otrue?r.
           ?lNew commands:?r
           - ?o/cancelblockupdate random <pos>?r: trigger random tick of block at ?opos?r.
           - ?o/cancelblockupdate schedule <pos>?r: trigger schedule tick of block at ?opos?r.
@@ -44,7 +45,7 @@ final class English extends FabricLanguageProvider {
           """);
         b.add(CBUGameRules.OFF.getDescriptionId(), modName + ": disable all effects of the mod");
         b.add(CBUGameRules.REPLACE.getDescriptionId(), modName + ": allow replace grass and fern");
+        b.add(CBUGameRules.STACK_SLABS.getDescriptionId(), modName + ": allow stacking slabs into double slabs");
     }
 
 }
-
