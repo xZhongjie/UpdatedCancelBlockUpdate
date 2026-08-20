@@ -19,6 +19,7 @@ public final class CBUIdentifiers {
       REQUEST_SYNC = of("request_sync"),
       OFF = of("off"),
       REPLACE = of("replace"),
+      STACK_SLABS = of("stack_slabs"),
       BOOL_RULE = of("bool_rule");
 
     public static Identifier of(String path) {
