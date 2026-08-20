@@ -28,19 +28,20 @@ final class English extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(HolderLookup.Provider registryLookup, TranslationBuilder b) {
-        String modName = "UpdatedCancelBlockUpdate (UCBU)";
+        String modName = "Cancel Block Update";
         b.add("modmenu.nameTranslation." + CancelBlockUpdate.MOD_ID, modName);
         b.add("modmenu.descriptionTranslation." + CancelBlockUpdate.MOD_ID, """
-          ?4?l[Warning]?r During world generation enable this mod might produce lots of floating blocks, if want to generate normal world, please change game rule in advance.
+          §4§l[Warning]§r During world generation enable this mod might produce lots of floating blocks, if want to generate normal world, please change game rule in advance.
+          This is an updated maintenance fork of CancelBlockUpdate by Phoupraw, maintained by xZhongjie, with support for newer Minecraft versions.
           Cancel block update, block schedule tick, random tick and fluid schedule tick, allow unlimited place block.
           For building special buildings, make and test special map.
-          ?lNew game rules:?r
-          - ?ocancelblockupdate:off?r: when ?ofalse?r, cancel all block update; when ?otrue?r it is vanilla; default ?ofalse?r.
-          - ?ocancelblockupdate:replace?r: when ?ofalse?r, grass, fern and so on block can't be replaced directly; when ?otrue?r it is vanilla; default ?ofalse?r.
-          - ?ocancelblockupdate:stack_slabs?r: when ?otrue?r, slabs can be stacked into double slabs; default ?otrue?r.
-          ?lNew commands:?r
-          - ?o/cancelblockupdate random <pos>?r: trigger random tick of block at ?opos?r.
-          - ?o/cancelblockupdate schedule <pos>?r: trigger schedule tick of block at ?opos?r.
+          §lNew game rules:§r
+          - §ocancelblockupdate:off§r: when §ofalse§r, cancel all block update; when §otrue§r it is vanilla; default §ofalse§r.
+          - §ocancelblockupdate:replace§r: when §ofalse§r, grass, fern and so on block can't be replaced directly; when §otrue§r it is vanilla; default §ofalse§r.
+          - §ocancelblockupdate:stack_slabs§r: when §otrue§r, slabs can be stacked into double slabs; default §otrue§r.
+          §lNew commands:§r
+          - §o/cancelblockupdate random <pos>§r: trigger random tick of block at §opos§r.
+          - §o/cancelblockupdate schedule <pos>§r: trigger schedule tick of block at §opos§r.
           Suggest with adapt block state debug stick to use.
           """);
         b.add(CBUGameRules.OFF.getDescriptionId(), modName + ": disable all effects of the mod");
