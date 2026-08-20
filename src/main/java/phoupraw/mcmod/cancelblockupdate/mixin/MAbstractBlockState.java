@@ -19,7 +19,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.redstone.Orientation;
@@ -83,13 +82,12 @@ abstract class MAbstractBlockState {
         }
     }
 
-    @Inject(method = "canBeReplaced", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "canBeReplaced", at = @At("RETURN"), cancellable = true)
     private void setCanBeReplaced(BlockPlaceContext context, CallbackInfoReturnable<Boolean> cir) {
         Level world = context.getLevel();
         BlockPos pos = context.getClickedPos();
         VoxelShape shape = world.getBlockState(pos).getShape(world, pos);
-        if (!CBUGameRules.get(CBUGameRules.REPLACE, world) && !shape.isEmpty()
-          && !(CBUGameRules.get(CBUGameRules.STACK_SLABS, world) && canStackSlabs(context))) {
+        if (!CBUGameRules.get(CBUGameRules.REPLACE, world) && !shape.isEmpty() && !(CBUGameRules.get(CBUGameRules.STACK_SLABS, world) && cir.getReturnValue())) {
             cir.setReturnValue(false);
         }
     }
