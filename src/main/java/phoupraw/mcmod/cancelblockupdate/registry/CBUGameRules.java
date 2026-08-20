@@ -43,6 +43,7 @@ public final class CBUGameRules {
     public static final Map<GameRule<Boolean>, Map<WorldView, Boolean>> CACHES;
     public static final GameRule<Boolean> OFF;
     public static final GameRule<Boolean> REPLACE;
+    public static final GameRule<Boolean> STACK_SLABS;
 
     static {
         OFF = GameRuleBuilder.forBoolean(false)
@@ -51,13 +52,18 @@ public final class CBUGameRules {
         REPLACE = GameRuleBuilder.forBoolean(false)
           .category(GameRuleCategory.UPDATES)
           .buildAndRegister(CBUIdentifiers.REPLACE);
+        STACK_SLABS = GameRuleBuilder.forBoolean(true)
+          .category(GameRuleCategory.UPDATES)
+          .buildAndRegister(CBUIdentifiers.STACK_SLABS);
         Registry.register(CBURegistries.BOOL_RULE, RegistryKey.of(CBURegistries.BOOL_RULE_KEY, CBUIdentifiers.OFF), OFF);
         Registry.register(CBURegistries.BOOL_RULE, RegistryKey.of(CBURegistries.BOOL_RULE_KEY, CBUIdentifiers.REPLACE), REPLACE);
+        Registry.register(CBURegistries.BOOL_RULE, RegistryKey.of(CBURegistries.BOOL_RULE_KEY, CBUIdentifiers.STACK_SLABS), STACK_SLABS);
         Map<GameRule<Boolean>, Map<WorldView, Boolean>> map = new HashMap<>();
         for (var key : CBURegistries.BOOL_RULE) map.put(key, new WeakHashMap<>());
         CACHES = map;
         GameRuleEvents.changeCallback(OFF).register(CBUGameRules::onOffChanged);
         GameRuleEvents.changeCallback(REPLACE).register(CBUGameRules::onReplaceChanged);
+        GameRuleEvents.changeCallback(STACK_SLABS).register(CBUGameRules::onStackSlabsChanged);
     }
 
     private static void onOffChanged(Boolean value, MinecraftServer server) {
@@ -66,6 +72,10 @@ public final class CBUGameRules {
 
     private static void onReplaceChanged(Boolean value, MinecraftServer server) {
         onChange(REPLACE, value, server);
+    }
+
+    private static void onStackSlabsChanged(Boolean value, MinecraftServer server) {
+        onChange(STACK_SLABS, value, server);
     }
 
     private static void onChange(GameRule<Boolean> rule, boolean newValue, MinecraftServer server) {
