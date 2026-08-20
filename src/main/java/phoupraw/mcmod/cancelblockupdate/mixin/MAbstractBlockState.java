@@ -90,9 +90,16 @@ abstract class MAbstractBlockState {
         World world = context.getWorld();
         BlockPos pos = context.getBlockPos();
         VoxelShape shape = world.getBlockState(pos).getOutlineShape(world, pos);
-        if (!CBUGameRules.get(CBUGameRules.REPLACE, world) && !shape.isEmpty()) {
+        if (!CBUGameRules.get(CBUGameRules.REPLACE, world) && !shape.isEmpty()
+          && !(CBUGameRules.get(CBUGameRules.STACK_SLABS, world) && canStackSlabs(context))) {
             cir.setReturnValue(false);
         }
+    }
+
+    private boolean canStackSlabs(ItemPlacementContext context) {
+        BlockState target = context.getWorld().getBlockState(context.getBlockPos());
+        if (!(getBlock() instanceof SlabBlock slab) || target.getBlock() != getBlock()) return false;
+        return slab.canReplace(target, context);
     }
 
 }
