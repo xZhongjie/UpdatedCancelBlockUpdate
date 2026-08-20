@@ -87,13 +87,12 @@ abstract class MAbstractBlockState {
         }
     }
 
-    @Inject(method = "canReplace", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "canReplace", at = @At("RETURN"), cancellable = true)
     private void setCanReplace(ItemPlacementContext context, CallbackInfoReturnable<Boolean> cir) {
         World world = context.getWorld();
         BlockPos pos = context.getBlockPos();
         VoxelShape shape = world.getBlockState(pos).getOutlineShape(world, pos);
-        if (!CBUGameRules.get(CBUGameRules.REPLACE, world) && !shape.isEmpty()
-          && !(CBUGameRules.get(CBUGameRules.STACK_SLABS, world) && canStackSlabs(context))) {
+        if (!CBUGameRules.get(CBUGameRules.REPLACE, world) && !shape.isEmpty() && !(CBUGameRules.get(CBUGameRules.STACK_SLABS, world) && cir.getReturnValue())) {
             cir.setReturnValue(false);
         }
     }
