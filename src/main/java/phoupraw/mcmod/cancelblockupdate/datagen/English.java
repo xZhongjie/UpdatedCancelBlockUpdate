@@ -11,20 +11,23 @@ package phoupraw.mcmod.cancelblockupdate.datagen;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.minecraft.registry.RegistryWrapper;
 import phoupraw.mcmod.cancelblockupdate.CancelBlockUpdate;
 import phoupraw.mcmod.cancelblockupdate.registry.CBUGameRules;
+
+import java.util.concurrent.CompletableFuture;
 
 @Environment(EnvType.CLIENT)
 final class English extends FabricLanguageProvider {
 
-    English(FabricDataGenerator dataGenerator) {
-        super(dataGenerator);
+    English(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+        super(dataOutput, registryLookup);
     }
 
     @Override
-    public void generateTranslations(TranslationBuilder b) {
+    public void generateTranslations(RegistryWrapper.WrapperLookup registryLookup, TranslationBuilder b) {
         String modName = "Cancel Block Update";
         b.add("modmenu.nameTranslation." + CancelBlockUpdate.MOD_ID, modName);
         b.add("modmenu.descriptionTranslation." + CancelBlockUpdate.MOD_ID, """
