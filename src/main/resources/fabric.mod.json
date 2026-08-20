@@ -3,7 +3,7 @@
   "id": "cancelblockupdate",
   "version": "${version}",
   "name": "UpdatedCancelBlockUpdate",
-  "description": "更新版取消方块更新 (UCBU)：阻止方块更新、方块计划刻、随机刻、放置可行性检查、流体计划刻、铁轨自动转角。阻止草和蕨等植物被替换。",
+  "description": "取消方块更新 (CBU) 的更新维护版：本模组修改自 Phoupraw 原作的 CancelBlockUpdate，由 xZhongjie 维护更新，新增对新版本 Minecraft 的支持。取消方块更新、方块计划刻、随机刻和流体计划刻，允许无条件放置方块。",
   "authors": ["Phoupraw", "xZhongjie"],
   "contact": {
     "homepage": "https://www.mcmod.cn/class/5695.html",
