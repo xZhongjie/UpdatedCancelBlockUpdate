@@ -14,6 +14,8 @@
 
 - `cancelblockupdate:replace`：为`false`时，草、蕨等方块不能被直接替换；为`true`即原版；默认为`false`。
 
+- `cancelblockupdate:stack_slabs`：为`true`时，半砖可以堆叠成双层半砖；默认为`true`。可使用 `/gamerule cancelblockupdate:stack_slabs false` 禁用。
+
 ## 新增指令
 
 - `/cancelblockupdate random <pos>`：触发`pos`处方块的随机刻。

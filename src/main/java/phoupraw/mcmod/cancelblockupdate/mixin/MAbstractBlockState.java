@@ -19,6 +19,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.redstone.Orientation;
@@ -87,9 +88,16 @@ abstract class MAbstractBlockState {
         Level world = context.getLevel();
         BlockPos pos = context.getClickedPos();
         VoxelShape shape = world.getBlockState(pos).getShape(world, pos);
-        if (!CBUGameRules.get(CBUGameRules.REPLACE, world) && !shape.isEmpty()) {
+        if (!CBUGameRules.get(CBUGameRules.REPLACE, world) && !shape.isEmpty()
+          && !(CBUGameRules.get(CBUGameRules.STACK_SLABS, world) && canStackSlabs(context))) {
             cir.setReturnValue(false);
         }
+    }
+
+    private boolean canStackSlabs(BlockPlaceContext context) {
+        BlockState target = context.getLevel().getBlockState(context.getClickedPos());
+        if (!(getBlock() instanceof SlabBlock slab) || target.getBlock() != getBlock()) return false;
+        return slab.canBeReplaced(target, context);
     }
 
 }
