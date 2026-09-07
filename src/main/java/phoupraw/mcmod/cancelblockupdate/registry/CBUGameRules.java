@@ -108,7 +108,7 @@ public final class CBUGameRules {
      @return ??????
      */
     public static boolean get(GameRule<Boolean> key, LevelReader world) {
-        var cache = CACHES.get(key);
+        var cache = CACHES.computeIfAbsent(key, ignored -> new WeakHashMap<>());
         Boolean value = cache.get(world);
         if (value != null) return value;
         if (world instanceof ServerLevel serverLevel) {
