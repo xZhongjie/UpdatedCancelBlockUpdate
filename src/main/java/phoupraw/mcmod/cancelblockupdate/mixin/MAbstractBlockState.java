@@ -47,14 +47,14 @@ abstract class MAbstractBlockState {
 
     @Inject(method = "handleNeighborChanged", at = @At("HEAD"), cancellable = true)
     private void cancelHandleNeighborChanged(Level world, BlockPos pos, Block block, Orientation orientation, boolean notify, CallbackInfo ci) {
-        if (!CBUGameRules.getOff(world) && !CBUGameRules.getNeighborUpdate(world)) {
+        if (!CBUGameRules.getOff(world)) {
             ci.cancel();
         }
     }
 
     @Inject(method = "updateNeighbourShapes*", at = @At("HEAD"), cancellable = true)
     private void cancelUpdateNeighbourShapes(LevelAccessor world, BlockPos pos, int flags, CallbackInfo ci) {
-        if (!CBUGameRules.getOff(world) && !CBUGameRules.getNeighborUpdate(world)) {
+        if (!CBUGameRules.getOff(world)) {
             ci.cancel();
         }
     }
@@ -62,7 +62,7 @@ abstract class MAbstractBlockState {
     //????????
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     private void cancelTick(ServerLevel world, BlockPos pos, RandomSource random, CallbackInfo ci) {
-        if (!CBUGameRules.getOff(world) && !CBUGameRules.getNeighborUpdate(world)) {
+        if (!CBUGameRules.getOff(world)) {
             ci.cancel();
         }
     }
@@ -70,14 +70,14 @@ abstract class MAbstractBlockState {
     //?????????
     @Inject(method = "canSurvive", at = @At("HEAD"), cancellable = true)
     private void passCanSurvive(LevelReader world, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        if (!CBUGameRules.getOff(world) && !CBUGameRules.getNeighborUpdate(world)) {
+        if (!CBUGameRules.getOff(world)) {
             cir.setReturnValue(true);
         }
     }
 
     @Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
     private void cancelRandomTick(ServerLevel world, BlockPos pos, RandomSource random, CallbackInfo ci) {
-        if (!CBUGameRules.getOff(world) && !CBUGameRules.getNeighborUpdate(world)) {
+        if (!CBUGameRules.getOff(world)) {
             ci.cancel();
         }
     }
