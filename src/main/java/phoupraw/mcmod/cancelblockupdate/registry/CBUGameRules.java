@@ -39,12 +39,12 @@ public final class CBUGameRules {
     public static final BiConsumer<MinecraftServer, GameRules.BooleanRule> ON_CHANGE = CBUGameRules::onChange;
     public static final GameRules.Key<GameRules.BooleanRule> OFF = GameRuleRegistry.register(CBUIdentifiers.OFF.toString(), GameRules.Category.UPDATES, GameRuleFactory.createBooleanRule(false, ON_CHANGE));
     public static final GameRules.Key<GameRules.BooleanRule> REPLACE = GameRuleRegistry.register(CBUIdentifiers.REPLACE.toString(), GameRules.Category.UPDATES, GameRuleFactory.createBooleanRule(false, ON_CHANGE));
-    public static final GameRules.Key<GameRules.BooleanRule> STACK_SLABS = GameRuleRegistry.register(CBUIdentifiers.STACK_SLABS.toString(), GameRules.Category.UPDATES, GameRuleFactory.createBooleanRule(true, ON_CHANGE));
+    public static final GameRules.Key<GameRules.BooleanRule> STACK_SLABS = GameRuleRegistry.register(CBUIdentifiers.STACK_SLABS.toString(), GameRules.Category.UPDATES, GameRuleFactory.createBooleanRule(true, ON_CHANGE));`r`n    public static final GameRules.Key<GameRules.BooleanRule> RAIL_AUTO_CONNECT = GameRuleRegistry.register(CBUIdentifiers.RAIL_AUTO_CONNECT.toString(), GameRules.Category.UPDATES, GameRuleFactory.createBooleanRule(true, ON_CHANGE));`r`n    public static final GameRules.Key<GameRules.BooleanRule> NEIGHBOR_UPDATE = GameRuleRegistry.register(CBUIdentifiers.NEIGHBOR_UPDATE.toString(), GameRules.Category.UPDATES, GameRuleFactory.createBooleanRule(false, ON_CHANGE));
 
     static {
         Registry.register(CBURegistries.BOOL_RULE, CBUIdentifiers.OFF, OFF);
         Registry.register(CBURegistries.BOOL_RULE, CBUIdentifiers.REPLACE, REPLACE);
-        Registry.register(CBURegistries.BOOL_RULE, CBUIdentifiers.STACK_SLABS, STACK_SLABS);
+        Registry.register(CBURegistries.BOOL_RULE, CBUIdentifiers.STACK_SLABS, STACK_SLABS);`r`n        Registry.register(CBURegistries.BOOL_RULE, CBUIdentifiers.RAIL_AUTO_CONNECT, RAIL_AUTO_CONNECT);`r`n        Registry.register(CBURegistries.BOOL_RULE, CBUIdentifiers.NEIGHBOR_UPDATE, NEIGHBOR_UPDATE);
         Map<GameRules.Key<GameRules.BooleanRule>, Map<WorldView, Boolean>> map = new HashMap<>();
         for (var key : CBURegistries.BOOL_RULE) map.put(key, new WeakHashMap<>());
         CACHES = map;
@@ -64,7 +64,7 @@ public final class CBUGameRules {
     /**
      @see #get
      */
-    public static boolean getOff(WorldView world) {
+    public static boolean getRailAutoConnect(WorldView world) { return get(RAIL_AUTO_CONNECT, world); }`r`n    public static boolean getNeighborUpdate(WorldView world) { return get(NEIGHBOR_UPDATE, world); }`r`n`r`n    public static boolean getOff(WorldView world) {
         return get(OFF, world);
     }
 
