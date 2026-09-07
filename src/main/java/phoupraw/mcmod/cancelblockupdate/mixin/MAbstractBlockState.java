@@ -92,7 +92,11 @@ abstract class MAbstractBlockState {
         World world = context.getWorld();
         BlockPos pos = context.getBlockPos();
         VoxelShape shape = world.getBlockState(pos).getOutlineShape(world, pos);
-        if (!CBUGameRules.get(CBUGameRules.REPLACE, world) && !shape.isEmpty() && !(CBUGameRules.get(CBUGameRules.STACK_SLABS, world) && cir.getReturnValue())) {
+        // Preserve vanilla same-block stacking (snow layers, candles, sea pickles,
+        // turtle eggs, multiface blocks, etc.) while still blocking ordinary replacement.
+        boolean sameBlockItem = context.getStack().isOf(getBlock().asItem());
+        if (!CBUGameRules.get(CBUGameRules.REPLACE, world) && !shape.isEmpty()
+          && !(cir.getReturnValue() && sameBlockItem)) {
             cir.setReturnValue(false);
         }
     }
