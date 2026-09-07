@@ -81,7 +81,10 @@ public final class CBUGameRules {
      @return 游戏规则值。
      */
     public static boolean get(GameRules.Key<GameRules.BooleanRule> key, WorldView world) {
-        var cache = CACHES.get(key);
+        // Some loader/API versions do not expose newly registered rules while
+        // the cache map is being initialized. Create the per-rule cache lazily
+        // instead of dereferencing a missing entry during the first world tick.
+        var cache = CACHES.computeIfAbsent(key, ignored -> new WeakHashMap<>());
         Boolean value = cache.get(world);
         if (value != null) return value;
         if (world instanceof ServerWorldAccess serverWorldAccess) {
