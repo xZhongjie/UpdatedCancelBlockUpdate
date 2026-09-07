@@ -88,7 +88,7 @@ abstract class MAbstractBlockState {
         BlockPos pos = context.getClickedPos();
         VoxelShape shape = world.getBlockState(pos).getShape(world, pos);
         // Preserve vanilla same-block stacking while still blocking ordinary replacement.
-        boolean sameBlockItem = context.getStack().isOf(getBlock().asItem());
+        boolean sameBlockItem = context.getItemInHand().isOf(getBlock().asItem());
         if (!CBUGameRules.get(CBUGameRules.REPLACE, world) && !shape.isEmpty() && !(cir.getReturnValue() && sameBlockItem)) {
             cir.setReturnValue(false);
         }
