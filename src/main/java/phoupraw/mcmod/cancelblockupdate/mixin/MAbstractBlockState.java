@@ -39,7 +39,7 @@ abstract class MAbstractBlockState {
 //?????????
     @Inject(method = "updateShape", at = @At("HEAD"), cancellable = true)
     private void cancelUpdateShape(LevelReader world, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random, CallbackInfoReturnable<BlockState> cir) {
-        if (!CBUGameRules.getOff(world)) {
+        if (!CBUGameRules.getOff(world) && !CBUGameRules.getNeighborUpdate(world)) {
             //noinspection ConstantConditions
             cir.setReturnValue((BlockState) (Object) this);
         }
