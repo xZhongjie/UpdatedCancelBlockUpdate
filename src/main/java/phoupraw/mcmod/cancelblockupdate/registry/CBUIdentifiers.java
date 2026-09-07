@@ -20,6 +20,8 @@ public final class CBUIdentifiers {
       OFF = of("off"),
       REPLACE = of("replace"),
       STACK_SLABS = of("stack_slabs"),
+      RAIL_AUTO_CONNECT = of("rail_auto_connect"),
+      NEIGHBOR_UPDATE = of("neighbor_update"),
       BOOL_RULE = of("bool_rule");
 
     public static Identifier of(String path) {

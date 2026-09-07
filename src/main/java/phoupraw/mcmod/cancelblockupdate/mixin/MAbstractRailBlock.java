@@ -26,7 +26,7 @@ class MAbstractRailBlock {
 
     @Inject(method = "updateState", at = @At("HEAD"), cancellable = true)
     private void cancelUpdateState(BlockState state, Level world, BlockPos pos, boolean notify, CallbackInfoReturnable<BlockState> cir) {
-        if (!CBUGameRules.getOff(world)) {
+        if (!CBUGameRules.getOff(world) && !CBUGameRules.getRailAutoConnect(world)) {
             cir.setReturnValue(state);
         }
     }
