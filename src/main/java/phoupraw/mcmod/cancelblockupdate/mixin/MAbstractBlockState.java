@@ -42,7 +42,7 @@ abstract class MAbstractBlockState {
     //以下是取消方块更新
     @Inject(method = "getStateForNeighborUpdate", at = @At("HEAD"), cancellable = true)
     private void cancelGetStateForNeighborUpdate(Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos, CallbackInfoReturnable<BlockState> cir) {
-        if (!CBUGameRules.getOff(world)) {
+        if (!CBUGameRules.getOff(world) && !CBUGameRules.getNeighborUpdate(world)) {
             //noinspection ConstantConditions
             cir.setReturnValue((BlockState) (Object) this);
         }
@@ -50,14 +50,14 @@ abstract class MAbstractBlockState {
 
     @Inject(method = "neighborUpdate", at = @At("HEAD"), cancellable = true)
     private void cancelNeighborUpdate(World world, BlockPos pos, Block block, BlockPos posFrom, boolean notify, CallbackInfo ci) {
-        if (!CBUGameRules.getOff(world)) {
+        if (!CBUGameRules.getOff(world) && !CBUGameRules.getNeighborUpdate(world)) {
             ci.cancel();
         }
     }
 
     @Inject(method = "updateNeighbors*", at = @At("HEAD"), cancellable = true)
     private void cancelUpdateNeighbors(WorldAccess world, BlockPos pos, int flags, CallbackInfo ci) {
-        if (!CBUGameRules.getOff(world)) {
+        if (!CBUGameRules.getOff(world) && !CBUGameRules.getNeighborUpdate(world)) {
             ci.cancel();
         }
     }
@@ -65,7 +65,7 @@ abstract class MAbstractBlockState {
     //以下是取消计划刻
     @Inject(method = "scheduledTick", at = @At("HEAD"), cancellable = true)
     private void cancelScheduledTick(ServerWorld world, BlockPos pos, Random random, CallbackInfo ci) {
-        if (!CBUGameRules.getOff(world)) {
+        if (!CBUGameRules.getOff(world) && !CBUGameRules.getNeighborUpdate(world)) {
             ci.cancel();
         }
     }
@@ -73,14 +73,14 @@ abstract class MAbstractBlockState {
     //以下是强制允许放置
     @Inject(method = "canPlaceAt", at = @At("HEAD"), cancellable = true)
     private void passCanPlaceAt(WorldView world, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        if (!CBUGameRules.getOff(world)) {
+        if (!CBUGameRules.getOff(world) && !CBUGameRules.getNeighborUpdate(world)) {
             cir.setReturnValue(true);
         }
     }
 
     @Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
     private void cancelRandomTick(ServerWorld world, BlockPos pos, Random random, CallbackInfo ci) {
-        if (!CBUGameRules.getOff(world)) {
+        if (!CBUGameRules.getOff(world) && !CBUGameRules.getNeighborUpdate(world)) {
             ci.cancel();
         }
     }
