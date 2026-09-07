@@ -39,6 +39,8 @@ final class Chinese extends FabricLanguageProvider {
           - §ocancelblockupdate:off§r：为§ofalse§r时，取消所有更新；为§otrue§r即原版；默认为§ofalse§r。
           - §ocancelblockupdate:replace§r：为§ofalse§r时，草、蕨等方块不能被直接替换；为§otrue§r即原版；默认为§ofalse§r。
           - §ocancelblockupdate:stack_slabs§r：为§otrue§r时，允许半砖堆叠成双层半砖；默认为§otrue§r。
+          - §ocancelblockupdate:rail_auto_connect§r：为§otrue§r时，允许铁轨自动连接；默认为§otrue§r。
+          - §ocancelblockupdate:neighbor_update§r：为§otrue§r时，允许方块根据邻居更新状态；默认为§ofalse§r。
           §l新增指令：§r
           - §o/cancelblockupdate random <pos>§r：触发§opos§r处方块的随机刻。
           - §o/cancelblockupdate schedule <pos>§r：触发§opos§r处方块的计划刻。
@@ -47,6 +49,8 @@ final class Chinese extends FabricLanguageProvider {
         b.add(CBUGameRules.OFF.getTranslationKey(), modName + "：禁用模组全部效果");
         b.add(CBUGameRules.REPLACE.getTranslationKey(), modName + "：允许放置方块替换草、蕨");
         b.add(CBUGameRules.STACK_SLABS.getTranslationKey(), modName + "：允许半砖堆叠成双层半砖");
+        b.add(CBUGameRules.RAIL_AUTO_CONNECT.getTranslationKey(), modName + "：允许铁轨自动连接");
+        b.add(CBUGameRules.NEIGHBOR_UPDATE.getTranslationKey(), modName + "：允许方块根据邻居更新状态");
     }
 
 }

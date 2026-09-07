@@ -44,6 +44,8 @@ public final class CBUGameRules {
     public static final GameRule<Boolean> OFF;
     public static final GameRule<Boolean> REPLACE;
     public static final GameRule<Boolean> STACK_SLABS;
+    public static final GameRule<Boolean> RAIL_AUTO_CONNECT;
+    public static final GameRule<Boolean> NEIGHBOR_UPDATE;
 
     static {
         OFF = GameRuleBuilder.forBoolean(false)
@@ -55,15 +57,25 @@ public final class CBUGameRules {
         STACK_SLABS = GameRuleBuilder.forBoolean(true)
           .category(GameRuleCategory.UPDATES)
           .buildAndRegister(CBUIdentifiers.STACK_SLABS);
+        RAIL_AUTO_CONNECT = GameRuleBuilder.forBoolean(true)
+          .category(GameRuleCategory.UPDATES)
+          .buildAndRegister(CBUIdentifiers.RAIL_AUTO_CONNECT);
+        NEIGHBOR_UPDATE = GameRuleBuilder.forBoolean(false)
+          .category(GameRuleCategory.UPDATES)
+          .buildAndRegister(CBUIdentifiers.NEIGHBOR_UPDATE);
         Registry.register(CBURegistries.BOOL_RULE, RegistryKey.of(CBURegistries.BOOL_RULE_KEY, CBUIdentifiers.OFF), OFF);
         Registry.register(CBURegistries.BOOL_RULE, RegistryKey.of(CBURegistries.BOOL_RULE_KEY, CBUIdentifiers.REPLACE), REPLACE);
         Registry.register(CBURegistries.BOOL_RULE, RegistryKey.of(CBURegistries.BOOL_RULE_KEY, CBUIdentifiers.STACK_SLABS), STACK_SLABS);
+        Registry.register(CBURegistries.BOOL_RULE, RegistryKey.of(CBURegistries.BOOL_RULE_KEY, CBUIdentifiers.RAIL_AUTO_CONNECT), RAIL_AUTO_CONNECT);
+        Registry.register(CBURegistries.BOOL_RULE, RegistryKey.of(CBURegistries.BOOL_RULE_KEY, CBUIdentifiers.NEIGHBOR_UPDATE), NEIGHBOR_UPDATE);
         Map<GameRule<Boolean>, Map<WorldView, Boolean>> map = new HashMap<>();
         for (var key : CBURegistries.BOOL_RULE) map.put(key, new WeakHashMap<>());
         CACHES = map;
         GameRuleEvents.changeCallback(OFF).register(CBUGameRules::onOffChanged);
         GameRuleEvents.changeCallback(REPLACE).register(CBUGameRules::onReplaceChanged);
         GameRuleEvents.changeCallback(STACK_SLABS).register(CBUGameRules::onStackSlabsChanged);
+        GameRuleEvents.changeCallback(RAIL_AUTO_CONNECT).register((value, server) -> onChange(RAIL_AUTO_CONNECT, value, server));
+        GameRuleEvents.changeCallback(NEIGHBOR_UPDATE).register((value, server) -> onChange(NEIGHBOR_UPDATE, value, server));
     }
 
     private static void onOffChanged(Boolean value, MinecraftServer server) {
@@ -91,6 +103,14 @@ public final class CBUGameRules {
      */
     public static boolean getOff(WorldView world) {
         return get(OFF, world);
+    }
+
+    public static boolean getRailAutoConnect(WorldView world) {
+        return get(RAIL_AUTO_CONNECT, world);
+    }
+
+    public static boolean getNeighborUpdate(WorldView world) {
+        return get(NEIGHBOR_UPDATE, world);
     }
 
     /**

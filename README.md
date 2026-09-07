@@ -14,6 +14,10 @@
 
 - `cancelblockupdate:replace`：为`false`时，草、蕨等方块不能被直接替换；为`true`即原版；默认为`false`。
 
+- `cancelblockupdate:rail_auto_connect`：为`true`时允许铁轨自动连接；为`false`时禁止；默认为`true`。
+
+- `cancelblockupdate:neighbor_update`：为`true`时允许方块根据邻居更新状态；为`false`时禁止；默认为`false`。
+
 ## 新增指令
 
 - `/cancelblockupdate random <pos>`：触发`pos`处方块的随机刻。

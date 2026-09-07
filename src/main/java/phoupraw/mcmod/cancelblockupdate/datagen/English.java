@@ -39,6 +39,8 @@ final class English extends FabricLanguageProvider {
           - §ocancelblockupdate:off§r: when §ofalse§r, cancel all block update; when §otrue§r it is vanilla; default §ofalse§r.
           - §ocancelblockupdate:replace§r: when §ofalse§r, grass, fern and so on block can't be replaced directly; when §otrue§r it is vanilla; default §ofalse§r.
           - §ocancelblockupdate:stack_slabs§r: when §otrue§r, slabs can be stacked into double slabs; default §otrue§r.
+          - §ocancelblockupdate:rail_auto_connect§r: when §otrue§r, rails can connect automatically; default §otrue§r.
+          - §ocancelblockupdate:neighbor_update§r: when §otrue§r, blocks can update state from neighbors; default §ofalse§r.
           §lNew commands:§r
           - §o/cancelblockupdate random <pos>§r: trigger random tick of block at §opos§r.
           - §o/cancelblockupdate schedule <pos>§r: trigger schedule tick of block at §opos§r.
@@ -47,6 +49,8 @@ final class English extends FabricLanguageProvider {
         b.add(CBUGameRules.OFF.getTranslationKey(), modName + ": disable all effects of the mod");
         b.add(CBUGameRules.REPLACE.getTranslationKey(), modName + ": allow replace grass and fern");
         b.add(CBUGameRules.STACK_SLABS.getTranslationKey(), modName + ": allow stacking slabs into double slabs");
+        b.add(CBUGameRules.RAIL_AUTO_CONNECT.getTranslationKey(), modName + ": allow rails to connect automatically");
+        b.add(CBUGameRules.NEIGHBOR_UPDATE.getTranslationKey(), modName + ": allow neighbor state updates");
     }
 
 }

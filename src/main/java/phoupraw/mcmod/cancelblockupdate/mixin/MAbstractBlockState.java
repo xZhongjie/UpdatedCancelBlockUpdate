@@ -44,7 +44,7 @@ abstract class MAbstractBlockState {
     //以下是取消方块更新
     @Inject(method = "getStateForNeighborUpdate", at = @At("HEAD"), cancellable = true)
     private void cancelGetStateForNeighborUpdate(WorldView world, ScheduledTickView scheduledTickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random, CallbackInfoReturnable<BlockState> cir) {
-        if (!CBUGameRules.getOff(world)) {
+        if (!CBUGameRules.getOff(world) && !CBUGameRules.getNeighborUpdate(world)) {
             //noinspection ConstantConditions
             cir.setReturnValue((BlockState) (Object) this);
         }
